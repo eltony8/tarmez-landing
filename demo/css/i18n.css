@@ -1,0 +1,376 @@
+/* =========================================================
+   Tarmez — Internationalisation layer
+   css/i18n.css — language switcher, Arabic typography and the
+   right-to-left adjustments.
+
+   Nothing here re-designs the site: the switcher reuses the navbar's
+   own colours, hairline border and control height, and the RTL rules
+   only mirror the handful of elements that are positioned with
+   physical (left/right) properties. Everything that is laid out with
+   flexbox, grid or logical text alignment flips automatically through
+   the `dir` attribute on <html>.
+   ========================================================= */
+
+/* =========================================================
+   1. Language switcher
+   ========================================================= */
+.lang-switcher { position: relative; flex-shrink: 0; }
+
+.lang-switcher-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 0.72rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(251, 246, 238, 0.28);
+  background: rgba(251, 246, 238, 0.06);
+  color: var(--on-dark-text);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.lang-switcher-btn:hover,
+.lang-switcher.is-open .lang-switcher-btn {
+  background: rgba(251, 246, 238, 0.14);
+  border-color: rgba(var(--gold-rgb), 0.75);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+.lang-switcher-btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.lang-switcher-icon { display: inline-flex; width: 17px; height: 17px; color: var(--color-gold-light); }
+.lang-switcher-icon svg { width: 100%; height: 100%; }
+.lang-switcher-chevron { display: inline-flex; width: 12px; height: 12px; opacity: 0.6; transition: transform var(--transition); }
+.lang-switcher-chevron svg { width: 100%; height: 100%; }
+.lang-switcher.is-open .lang-switcher-chevron { transform: rotate(180deg); }
+
+/* The compact code is the only label in the bar — the full language name
+   stays visible inside the dropdown. */
+.lang-switcher-label { display: none; letter-spacing: 0.01em; }
+.lang-switcher-code { display: inline; font-weight: 700; letter-spacing: 0.06em; }
+
+.lang-switcher-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  inset-inline-end: 0;
+  min-width: 206px;
+  padding: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 24px 54px rgba(var(--dark-1-rgb), 0.28);
+  z-index: 70;
+  animation: langPanelIn 0.18s ease both;
+}
+.lang-switcher-panel[hidden] { display: none; }
+@keyframes langPanelIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.lang-switcher-head {
+  padding: 5px 9px 8px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 11px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: start;
+  transition: background var(--transition);
+}
+.lang-option:hover { background: var(--bg-surface-alt); }
+.lang-option-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--bg-surface-alt);
+  color: var(--text-secondary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  transition: background var(--transition), color var(--transition);
+}
+.lang-option-label { flex: 1; unicode-bidi: isolate; }
+.lang-option-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  font-size: 0.8rem;
+  color: var(--color-terracotta);
+  opacity: 0;
+}
+.lang-option.is-active { font-weight: 700; }
+.lang-option.is-active .lang-option-code { background: var(--color-terracotta); color: #FFFFFF; }
+.lang-option.is-active .lang-option-check { opacity: 1; }
+
+/* Group of small controls (legal pages) */
+.nav-tools { display: inline-flex; align-items: center; gap: var(--space-3); }
+
+/* Floating variant for the small auth pages */
+.lang-switcher-floating {
+  position: absolute;
+  top: 28px;
+  inset-inline-end: 76px;
+  z-index: 5;
+}
+.lang-switcher-floating .lang-switcher-btn {
+  background: rgba(var(--charcoal-rgb), 0.55);
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 720px) {
+  .lang-switcher-btn { padding: 0 0.58rem; }
+  .lang-switcher-panel { min-width: 190px; }
+}
+
+/* ------------------------------------------------------------
+   The navbar was designed for a wide desktop. Adding the language
+   control needs a little room, so below 1200px the link spacing
+   tightens slightly and below 1080px the control falls back to
+   its short language code (the full name stays in the dropdown).
+   Above 1200px nothing changes.
+   ------------------------------------------------------------ */
+@media (max-width: 1200px) and (min-width: 721px) {
+  .nav-links { gap: var(--space-4); }
+}
+@media (max-width: 1080px) and (min-width: 721px) {
+  .nav-links { gap: var(--space-3); }
+}
+@media (max-width: 480px) {
+  .lang-switcher-btn { padding: 0 0.5rem; gap: 5px; }
+  .lang-switcher-icon { width: 15px; height: 15px; }
+  .lang-switcher-chevron { display: none; }
+}
+
+/* =========================================================
+   2. Arabic typography
+   El Messiri is the Arabic counterpart of Playfair Display:
+   a modern calligraphic face with high contrast and elegant
+   curves — the fine-dining character we want in headings.
+   Alexandria carries the body copy (a clean geometric sans
+   that sits next to Inter). Both are only downloaded when
+   Arabic is selected.
+   ========================================================= */
+[lang="ar"] body,
+[lang="ar"] input,
+[lang="ar"] select,
+[lang="ar"] textarea,
+[lang="ar"] button {
+  font-family: 'Alexandria', 'Segoe UI', Tahoma, sans-serif;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+}
+
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] h4,
+[lang="ar"] .hero-stat strong,
+[lang="ar"] .stat-value,
+[lang="ar"] .badge-icon,
+[lang="ar"] .menu-card-price {
+  font-family: 'El Messiri', 'Segoe UI', Tahoma, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+/* Arabic needs a touch more line height and no letter-spacing on the
+   uppercase eyebrows, which look wrong with the extra tracking. */
+[lang="ar"] body { line-height: 1.9; }
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] h4 { line-height: 1.45; }
+[lang="ar"] .hero-eyebrow,
+[lang="ar"] .section-eyebrow,
+[lang="ar"] .admin-eyebrow,
+[lang="ar"] .status-pill,
+[lang="ar"] .badge-role,
+[lang="ar"] .content-badge,
+[lang="ar"] .data-table th,
+[lang="ar"] .hero-tag-pill {
+  letter-spacing: 0;
+  text-transform: none;
+}
+[lang="ar"] .testimonial-slide p {
+  font-family: 'Alexandria', 'Segoe UI', Tahoma, sans-serif;
+  font-style: normal;
+}
+[dir="rtl"] .testimonial-author strong,
+[dir="rtl"] .testimonial-author span {
+  unicode-bidi: plaintext;
+}
+
+/* Alexandria is a touch wider than the old body face, so the Arabic
+   navbar needs slightly tighter tracking to stay on one line. */
+[lang="ar"] .navbar .container { gap: 1.25rem; }
+[lang="ar"] .nav-links { gap: 1.3rem; }
+[lang="ar"] .nav-links a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+[lang="ar"] body.home-page .hero p {
+  max-width: 600px;
+  font-size: 1rem;
+  line-height: 1.95;
+}
+[lang="ar"] .order-label {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.72rem;
+}
+[lang="ar"] .order-dish-list li { font-size: 0.88rem; line-height: 1.6; }
+[lang="ar"] .mgmt-note { line-height: 1.7; }
+
+/* =========================================================
+   3. Right-to-left adjustments
+   Only elements positioned with physical left/right need help —
+   everything else follows the document direction on its own.
+   ========================================================= */
+[dir="rtl"] .nav-links a::after { left: auto; right: 0; }
+
+[dir="rtl"] .hero-visual-accent { right: auto; left: -22px; }
+[dir="rtl"] .hero-badge-card { left: auto; right: -20px; }
+[dir="rtl"] .hero-tag-pill { left: auto; right: 18px; }
+[dir="rtl"] .about-media .frame-accent { right: auto; left: -30px; }
+[dir="rtl"] .menu-card-badge { left: auto; right: 12px; }
+
+[dir="rtl"] .testimonial-slide { transform: translateX(-24px); }
+[dir="rtl"] .testimonial-slide.active { transform: translateX(0); }
+
+[dir="rtl"] .footer-bottom a { margin-left: 0; margin-right: var(--space-4); }
+[dir="rtl"] .legal-page ul { padding-left: 0; padding-right: var(--space-4); }
+
+[dir="rtl"] .scroll-top-btn { right: auto; left: 28px; }
+[dir="rtl"] .toast-stack { right: auto; left: 18px; }
+[dir="rtl"] .toast.success { border-left: none; border-right: 4px solid var(--color-success); }
+[dir="rtl"] .toast.error { border-left: none; border-right: 4px solid var(--color-error); }
+[dir="rtl"] .toast.info { border-left: none; border-right: 4px solid var(--color-gold); }
+
+[dir="rtl"] .data-table th,
+[dir="rtl"] .data-table td { text-align: right; }
+
+[dir="rtl"] .nav-account-menu { right: auto; left: 0; }
+[dir="rtl"] .nav-account-menu a,
+[dir="rtl"] .nav-account-menu button { text-align: right; }
+
+[dir="rtl"] .modal { text-align: right; }
+[dir="rtl"] .modal-close { float: left !important; }
+
+[dir="rtl"] .auth-back { left: auto; right: 28px; }
+[dir="rtl"] .auth-page .theme-toggle { right: auto !important; left: 28px !important; }
+
+[dir="rtl"] .switch .slider::before { left: auto; right: 3px; }
+[dir="rtl"] .switch input:checked + .slider::before { transform: translateX(-18px); }
+
+[dir="rtl"] .admin-hero-banner::before { right: auto; left: 0; background: radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.12), transparent 70%); }
+[dir="rtl"] [data-theme="dark"] .admin-hero-banner::before { background: radial-gradient(circle at top left, rgba(var(--gold-rgb), 0.16), transparent 70%); }
+
+/* The cart drawer slides in from the opposite side in Arabic. */
+[dir="rtl"] .cart-drawer { right: auto; left: 0; transform: translateX(-100%); }
+[dir="rtl"] .cart-drawer.open { transform: translateX(0); }
+
+/* The mega menu of the navbar stays centred, so nothing to mirror. */
+
+/* =========================================================
+   4. Mixed-direction content
+   Phone numbers, e-mail addresses, URLs and other technical
+   identifiers always keep their own (left-to-right) direction.
+   ========================================================= */
+.ltr-value,
+input[type="tel"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+.mono-value,
+code,
+kbd {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="url"],
+[dir="rtl"] input[type="number"],
+[dir="rtl"] input[type="date"],
+[dir="rtl"] input[type="time"] {
+  text-align: start;
+}
+/* Numbers inside a right-to-left sentence still read left to right. */
+[dir="rtl"] .ltr-value { display: inline-block; }
+
+/* =========================================================
+   6. Bilingual content form (Website Content Management)
+   Each editable text shows its English and its Arabic version,
+   stacked inside the existing .content-grid card.
+   ========================================================= */
+.content-lang-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.content-lang-tag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--bg-surface-alt);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+.content-lang-block:last-of-type { margin-bottom: 0; }
+[dir="rtl"] .content-lang-tag { letter-spacing: 0; }
+
+/* =========================================================
+   7. Small refinements
+   ========================================================= */
+/* Long Arabic words must never break the fixed-height controls. */
+[lang="ar"] .btn,
+[lang="ar"] .menu-filter-btn,
+[lang="ar"] .tab-btn,
+[lang="ar"] .content-subtab,
+[lang="ar"] .lang-switcher-btn {
+  line-height: 1.45;
+}
+
+/* The reserved space for the language label keeps the navbar from
+   shifting when the two labels have different widths. */
+.lang-switcher-label { min-width: 0; }
+
+@media (max-width: 720px) {
+  [dir="rtl"] .hero-visual-accent { left: -14px; }
+  [dir="rtl"] .hero-badge-card { right: 0; left: auto; }
+  [dir="rtl"] .scroll-top-btn { left: 18px; right: auto; }
+}

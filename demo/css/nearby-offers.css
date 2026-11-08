@@ -1,0 +1,75 @@
+/* =========================================================
+   Tarmez — offers near the restaurant (js/nearby-offers.js)
+   The "turn on" card and the offer banner; the admin preview
+   uses the same banner.
+   ========================================================= */
+.nb-card {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin: 18px auto; width: min(1100px, calc(100% - 32px));
+  padding: 14px 16px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(196, 96, 46, .10), rgba(217, 164, 65, .10));
+  border: 1px solid rgba(196, 96, 46, .25); color: var(--text-primary);
+}
+.account-section .nb-card { width: 100%; margin: 0 0 16px; }
+.nb-card-icon { font-size: 1.6rem; line-height: 1; }
+.nb-card-text { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 3px; }
+.nb-card-text b { font-size: 1rem; }
+.nb-card-text span { color: var(--text-secondary); font-size: .9rem; }
+.nb-card-text small { color: var(--text-muted); font-size: .78rem; }
+.nb-card-close {
+  border: 0; background: transparent; color: var(--text-muted); font-size: 1.3rem; line-height: 1;
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+}
+.nb-card-close:hover { background: rgba(0, 0, 0, .06); }
+.nb-card.is-denied { background: var(--bg-surface-alt, rgba(0, 0, 0, .03)); border-color: var(--border-color); }
+
+.nb-banner {
+  position: fixed; z-index: 1200; inset-inline: 16px; bottom: calc(16px + var(--nb-offset, 0px) + env(safe-area-inset-bottom, 0px));
+  margin-inline: auto; max-width: 520px;
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 14px 14px 16px; border-radius: 18px;
+  background: var(--bg-surface); color: var(--text-primary);
+  border: 1px solid rgba(196, 96, 46, .35);
+  box-shadow: 0 18px 50px -12px rgba(0, 0, 0, .35);
+  transform: translateY(24px); opacity: 0; transition: transform .35s ease, opacity .35s ease;
+}
+.nb-banner.is-in, .nb-banner.is-preview { transform: none; opacity: 1; }
+.nb-banner.is-preview { position: relative; inset: auto; bottom: auto; max-width: none; margin: 0; }
+.nb-img { width: 72px; height: 72px; border-radius: 14px; object-fit: cover; flex: 0 0 auto; }
+.nb-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.nb-eyebrow { color: var(--color-terracotta, #C4602E); font-size: .78rem; font-weight: 700; }
+.nb-title { font-size: 1.02rem; line-height: 1.35; }
+.nb-text { margin: 0; color: var(--text-secondary); font-size: .88rem; line-height: 1.55; }
+.nb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+.nb-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; letter-spacing: 1px;
+  padding: 5px 10px; border-radius: 8px; border: 1.5px dashed var(--color-terracotta, #C4602E);
+  color: var(--color-terracotta, #C4602E); background: rgba(196, 96, 46, .06);
+}
+.nb-copy, .nb-push {
+  border: 1px solid var(--border-color); background: transparent; color: var(--text-primary);
+  border-radius: 999px; padding: 5px 12px; font: inherit; font-size: .82rem; cursor: pointer;
+}
+.nb-push { align-self: flex-start; margin-top: 4px; }
+.nb-cta {
+  margin-inline-start: auto; padding: 7px 16px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: .88rem;
+  background: var(--color-terracotta, #C4602E); color: #fff;
+}
+.nb-cta:hover { filter: brightness(1.05); }
+.nb-signin { font-size: .82rem; color: var(--color-terracotta, #C4602E); font-weight: 600; }
+.nb-close {
+  border: 0; background: transparent; color: var(--text-muted); font-size: 1.3rem; line-height: 1;
+  width: 30px; height: 30px; border-radius: 50%; cursor: pointer; flex: 0 0 auto; display: grid; place-items: center;
+}
+.nb-close:hover { background: rgba(0, 0, 0, .06); }
+
+.nb-highlight { outline: 3px solid var(--color-terracotta, #C4602E); outline-offset: 4px; border-radius: 16px; transition: outline-color .4s; }
+
+@media (max-width: 520px) {
+  .nb-banner { inset-inline: 10px; padding: 12px; }
+  .nb-img { width: 56px; height: 56px; }
+  .nb-cta { margin-inline-start: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nb-banner { transition: none; }
+}

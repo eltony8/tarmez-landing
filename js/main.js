@@ -29,13 +29,32 @@
     renderPlans();
     renderPlanSelect();
     setupContact();
-    if (qr) drawQR(1);
+    if (qr) { buildQR(); drawQR(1); }
+    if (frame.dataset.loaded) loadDemo(); // the demo follows the page language
   }
   $('#langBtn').addEventListener('click', () => {
     lang = lang === 'ar' ? 'en' : 'ar';
     store.set('tarmez_lang', lang);
     applyLang();
   });
+
+  /* ---------------- the live demo inside the hero phone ---------------- */
+  const demoUrl = () => new URL(`demo/index.html?t=demo&lang=${lang}`, location.href).href;
+  const frame = $('#demoFrame');
+  const screen = $('#demoScreen');
+  function fitDemo() {
+    const k = screen.clientWidth / 390;
+    screen.style.setProperty('--k', String(k));
+    frame.style.height = Math.ceil(screen.clientHeight / k) + 'px'; // fill the screen exactly
+  }
+  function loadDemo() {
+    const url = demoUrl();
+    if (frame.dataset.loaded !== url) { frame.src = url; frame.dataset.loaded = url; }
+    frame.tabIndex = 0;
+    $('#demoFull').href = url;
+    fitDemo();
+  }
+  window.addEventListener('resize', fitDemo);
 
   /* ---------------- the hero: the table's code breaks apart into the menu ---------------- */
   const stage = $('#heroStage');
@@ -47,7 +66,7 @@
   function buildQR() {
     if (typeof window.qrcode !== 'function') return false;
     const q = window.qrcode(0, 'M');
-    q.addData(CFG.siteUrl);
+    q.addData(CFG.qrUrl || demoUrl());
     q.make();
     const n = q.getModuleCount();
     modules = [];
@@ -79,16 +98,16 @@
 
   function play() {
     stage.classList.remove('scanned');
-    if (!qr) { stage.classList.add('scanned'); return; }
+    if (!qr) { stage.classList.add('scanned'); loadDemo(); return; }
     drawQR(1, 0);
-    if (reduced) { stage.classList.add('scanned'); return; }
+    if (reduced) { stage.classList.add('scanned'); loadDemo(); return; }
     const t0 = performance.now() + 900;
     const dur = 1100;
     const step = (now) => {
       const k = Math.min(1, Math.max(0, (now - t0) / dur));
       if (now < t0) { requestAnimationFrame(step); return; }
       drawQR(1, k);
-      if (k > 0.35 && !stage.classList.contains('scanned')) stage.classList.add('scanned');
+      if (k > 0.35 && !stage.classList.contains('scanned')) { stage.classList.add('scanned'); loadDemo(); }
       if (k < 1) requestAnimationFrame(step);
       else setTimeout(() => drawQR(1, 0), 500); // the small card shows the whole code again
     };

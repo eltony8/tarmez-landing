@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="_demo/mock.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track an Order or Reservation — Tarmez</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#1F1B18">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tarmez">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="js/palette.js?v=6"></script>
+<link rel="stylesheet" href="css/styles.css?v=53">
+<link rel="stylesheet" href="css/i18n.css?v=9">
+<link rel="stylesheet" href="css/notifications.css?v=3">
+<script>(function(){try{var t=localStorage.getItem('savoria_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<script>(function(){try{var L=localStorage.getItem('savoria_lang')||'en';if(L!=='ar'&&L!=='en'){L='en';}document.documentElement.setAttribute('lang',L);document.documentElement.setAttribute('dir',L==='ar'?'rtl':'ltr');if(L==='ar'){var l=document.createElement('link');l.id='savoria-arabic-font';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Alexandria:wght@300;400;500;600;700&display=swap';document.head.appendChild(l);}}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="navbar navbar-solid" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg?v=11" alt="Tarmez" data-content-img="logo"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="index.html#menu" data-i18n="nav.menu">Menu</a>
+      <a href="index.html#reservation" data-i18n="nav.reservations">Reservations</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-i18n-attr="aria-label:nav.toggleDarkMode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="login.html" class="btn btn-outline btn-sm" data-i18n="nav.logIn">Log In</a>
+    </div>
+  </div>
+</header>
+
+<main class="dashboard-page">
+  <div class="container" style="max-width:720px;">
+    <div class="dashboard-header">
+      <div>
+        <h1 data-i18n="track.title">Track an Order or Reservation</h1>
+        <p data-i18n="track.subtitle">Enter the phone number you used to place your order or book your table.</p>
+      </div>
+    </div>
+
+    <form id="trackForm" class="auth-card" style="max-width:none; margin-bottom: var(--space-6);">
+      <div class="form-group">
+        <label for="trackPhone" data-i18n="track.phoneNumber">Phone Number</label>
+        <input type="tel" id="trackPhone" placeholder="05XXXXXXXX" autocomplete="tel" required dir="ltr">
+      </div>
+      <div class="form-group">
+        <label for="trackCode" data-i18n="track.trackingCode">Tracking Code</label>
+        <input type="text" id="trackCode" placeholder="ABCD2345" autocomplete="one-time-code" maxlength="8" dir="ltr" style="text-transform:uppercase;">
+        <small class="mgmt-note" data-i18n="track.trackingCodeHint">The 8-character code shown when you placed the order. Only needed if you are not signed in.</small>
+      </div>
+      <div class="auth-alert" id="trackAlert"></div>
+      <button type="submit" class="btn btn-primary btn-block" id="trackBtn" data-i18n="track.track">Track</button>
+    </form>
+
+    <div id="trackResult"></div>
+  </div>
+</main>
+
+<script src="js/theme.js?v=11"></script>
+<script src="js/locales/en.js?v=40"></script>
+<script src="js/locales/ar.js?v=40"></script>
+<script src="js/i18n.js?v=8"></script>
+<script src="js/lang-switcher.js?v=3"></script>
+<script src="js/api.js?v=30"></script>
+<script src="js/features.js?v=1"></script>
+<script src="js/app.js?v=46"></script>
+<script src="js/notifications.js?v=7"></script>
+<script src="js/content.js?v=6"></script>
+<script src="js/live-refresh.js?v=1"></script>
+<script>
+  const I18N = window.SavoriaI18n;
+  const t = (key, params) => (I18N ? I18N.t(key, params) : key);
+  const tr = (msg) => (I18N ? I18N.translateApiMessage(msg) : msg);
+  const statusLabel = (status) => t(`status.${String(status || '')}`);
+  /* Pickup and dine-in orders are never "on the way" or "delivered": they are ready, then picked up / served. */
+  const orderStatusLabel = (status, type) => {
+    if (type && type !== 'delivery' && status === 'out_for_delivery') return t('ws.ready');
+    if (type && type !== 'delivery' && status === 'delivered') return t('ws.actions.served');
+    return statusLabel(status);
+  };
+
+  const STATUS_FLOW = ['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered'];
+  const RESERVATION_STATUS_FLOW = ['pending', 'confirmed', 'completed'];
+  const formatSAR = (amount) => (I18N ? I18N.fmtSAR(amount) : 'SAR ' + Number(amount).toLocaleString('en-US'));
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  const parseDT = (v) => new Date(String(v ?? '').includes('T') ? v : String(v ?? '').replace(' ', 'T'));
+  const formatDate = (iso) => (I18N ? I18N.fmtDateTime(iso) : (() => { const d = parseDT(iso); return isNaN(d.getTime()) ? '' : d.toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }); })());
+  const formatReservationDate = (dateStr) => (I18N ? I18N.fmtDate(dateStr + 'T00:00:00') : (() => { const d = new Date(dateStr + 'T00:00:00'); return isNaN(d.getTime()) ? String(dateStr ?? '') : d.toLocaleDateString('en-GB', { dateStyle: 'medium' }); })());
+  const formatReservationTime = (timeStr) => (I18N ? I18N.fmtTime('1970-01-01T' + String(timeStr ?? '').slice(0, 5)) : (() => {
+    const parts = String(timeStr ?? '').split(':');
+    if (parts.length < 2) return String(timeStr ?? '');
+    const d = new Date();
+    d.setHours(+parts[0], +parts[1], 0, 0);
+    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  })());
+
+  function timeline(status, flow, type) {
+    if (status === 'cancelled') {
+      return `<div class="tracking-timeline"><div class="tracking-step-wrap">
+        <div class="tracking-step-dot" style="background:var(--color-error);border-color:var(--color-error);color:#fff;">✕</div>
+        <div class="tracking-step-label" style="color:var(--color-error);">${t('track.cancelled')}</div>
+      </div></div>`;
+    }
+    const currentIndex = flow.indexOf(status);
+    return `<div class="tracking-timeline">${flow.map((step, i) => {
+      const cls = i < currentIndex ? 'done' : i === currentIndex ? 'current' : '';
+      const dot = i < currentIndex ? '✓' : i + 1;
+      return `<div class="tracking-step-wrap ${cls}">
+        <div class="tracking-step-dot">${dot}</div>
+        <div class="tracking-step-label">${orderStatusLabel(step, type)}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  /* The order number is the operational counter (the manager can reset
+     it); the invoice number is the permanent internal id. The customer
+     only ever sees the order number, so it follows the counter. */
+  const orderNumberOf = (order) => {
+    const n = order && order.order_number;
+    return (n !== null && n !== undefined && n !== '') ? n : (order ? order.id : '');
+  };
+
+  function orderCard(order) {
+    const status = order.status || 'pending';
+    const type = t(`orderType.${String(order.order_type || '')}`);
+    const items = (order.items || []).map(i =>
+      `<li><span>${esc(window.SavoriaI18n?.itemName?.(i) || i.item_name_snapshot || i.name)}${window.SavoriaI18n?.itemChoice?.(i) ? ` <small class="order-dish-choice">(${esc(window.SavoriaI18n.itemChoice(i))})</small>` : ''} × ${esc(i.quantity)}</span><span>${formatSAR(i.subtotal)}</span></li>`
+    ).join('');
+    return `
+      <div class="order-card" style="margin-bottom: var(--space-5);">
+        <div class="order-card-top">
+          <h3>${t('track.orderNumber', { id: esc(orderNumberOf(order)) })}</h3>
+          <span class="status-pill ${esc(status)}">${esc(orderStatusLabel(status, order.order_type))}</span>
+        </div>
+        <div class="order-card-meta">${esc(formatDate(order.created_at))}${type ? ' · ' + esc(type) : ''}</div>
+        ${timeline(status, STATUS_FLOW, order.order_type)}
+        <ul class="order-items-list">${items}</ul>
+        ${Number(order.vat_amount) > 0 ? `<div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text-secondary);margin-top:8px;"><span>${(window.I18N && I18N.t('cart.vat')) || 'VAT'} (${order.vat_rate || 15}%)</span><span>+ ${formatSAR(order.vat_amount)}</span></div>` : ''}
+        <div class="order-card-footer"><span>${t('track.total')}</span><span>${formatSAR(order.total_amount)}</span></div>
+        ${status === 'delivered' ? `<button type="button" class="btn btn-primary btn-sm account-order-rate" data-rate-order="${esc(order.id)}" style="margin-top:12px;margin-inline-end:6px;"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="M12 2.8l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.36l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93z"/></svg><span>${esc(t('rate.rateOrder'))}</span></button>` : ''}
+        ${status === 'delivered' ? `<button type="button" class="btn btn-outline btn-sm account-order-invoice" data-invoice-order="${esc(order.id)}" style="margin-top:12px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/><path d="M12 9v0"/></svg><span>${esc(t('invoice.open'))}</span></button>` : ''}
+      </div>`;
+  }
+
+  function reservationCard(r) {
+    const status = r.status || 'pending';
+    const party = Number(r.party_size) > 1 ? t('common.guests') : t('common.guest');
+    return `
+      <div class="order-card" style="margin-bottom: var(--space-5);">
+        <div class="order-card-top">
+          <h3>${t('track.reservationNumber', { id: esc(r.id) })}</h3>
+          <span class="status-pill ${esc(status)}">${esc(statusLabel(status))}</span>
+        </div>
+        <div class="order-card-meta">${esc(formatReservationDate(r.reservation_date))} · ${esc(formatReservationTime(r.reservation_time))}</div>
+        ${timeline(status, RESERVATION_STATUS_FLOW)}
+        <ul class="order-items-list">
+          <li><span>${t('track.guestName')}</span><span>${esc(r.full_name)}</span></li>
+          <li><span>${t('track.partySize')}</span><span>${esc(r.party_size)} ${esc(party)}</span></li>
+          ${r.notes ? `<li><span>${t('track.notes')}</span><span>${esc(r.notes)}</span></li>` : ''}
+        </ul>
+      </div>`;
+  }
+
+  let lastPhone = '';
+  let lastCode = '';
+
+  // Live: the same lookup every 15 s while results are on screen; a changed status is highlighted.
+  if (window.SavoriaLive) {
+    window.SavoriaLive.every(async () => {
+      if (!lastPhone || !document.getElementById('trackResult').innerHTML.trim()) return;
+      const before = window.SavoriaLive.statuses(lastOrders);
+      await track(lastPhone, lastCode);
+      const after = window.SavoriaLive.statuses(lastOrders);
+      const changed = Object.keys(after).filter((id) => before[id] !== undefined && before[id] !== after[id]);
+      if (!changed.length) return;
+      document.querySelectorAll('#trackResult .order-card').forEach((card) => {
+        const id = card.querySelector('[data-invoice-order], [data-rate-order]')?.dataset.invoiceOrder;
+        if (id && changed.includes(String(id))) card.classList.add('is-status-updated');
+      });
+      const o = lastOrders.find((x) => String(x.id) === changed[0]);
+      if (o) window.SavoriaLive.announce(t('live.orderNow', { number: orderNumberOf(o), status: orderStatusLabel(o.status, o.order_type) }));
+      if (changed.length) document.querySelectorAll('#trackResult .order-card').forEach((card, i) => {
+        if (!card.classList.contains('is-status-updated') && lastOrders[i] && changed.includes(String(lastOrders[i].id))) card.classList.add('is-status-updated');
+      });
+    });
+  }
+
+  // A guest's invoice: keep the phone + code for this tab only, then open the invoice page.
+  document.getElementById('trackResult').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-invoice-order], [data-rate-order]');
+    if (!btn) return;
+    const id = btn.dataset.invoiceOrder || btn.dataset.rateOrder;
+    try {
+      const map = JSON.parse(sessionStorage.getItem('savoria_invoice_access') || '{}');
+      map[id] = { phone: lastPhone, code: lastCode };
+      sessionStorage.setItem('savoria_invoice_access', JSON.stringify(map));
+    } catch (_) { /* storage blocked: the page will ask to sign in */ }
+    location.href = (btn.dataset.rateOrder ? 'rate.html?order=' : 'invoice.html?order=') + encodeURIComponent(id);
+  });
+  let lastOrders = [];
+  let lastReservations = [];
+
+  /* Codes the browser has seen for this phone (same device only). */
+  function rememberedCode(phone) {
+    try {
+      const map = JSON.parse(localStorage.getItem('savoria_track_codes') || '{}');
+      return map[String(phone).replace(/\D/g, '').slice(-10)] || '';
+    } catch { return ''; }
+  }
+
+  async function track(phone, code) {
+    const resultEl = document.getElementById('trackResult');
+    const alertBox = document.getElementById('trackAlert');
+    alertBox.className = 'auth-alert';
+
+    try {
+      const [ordersRes, reservationsRes, rewardsRes] = await Promise.allSettled([
+        SavoriaAPI.trackOrders(phone, code),
+        SavoriaAPI.trackReservations(phone),
+        SavoriaAPI.lookupCouponsByPhone(phone),
+      ]);
+
+      const errors = [];
+      const orders = ordersRes.status === 'fulfilled' ? (ordersRes.value?.orders || []) : [];
+      const reservations = reservationsRes.status === 'fulfilled' ? (reservationsRes.value?.reservations || []) : [];
+      const rewards = rewardsRes.status === 'fulfilled' ? (rewardsRes.value?.data || rewardsRes.value) : null;
+
+      if (ordersRes.status === 'rejected') errors.push(tr(ordersRes.reason?.message) || 'Could not load orders.');
+      if (reservationsRes.status === 'rejected') errors.push(tr(reservationsRes.reason?.message) || 'Could not load reservations.');
+
+      lastPhone = phone;
+      lastCode = code;
+      lastOrders = orders;
+      lastReservations = reservations;
+
+      const availableCoupons = (rewards && rewards.coupons ? rewards.coupons : []).filter(c => c.status === 'available');
+      const hasRewards = rewards && rewards.enabled !== false && availableCoupons.length > 0;
+
+      if (!orders.length && !reservations.length && !hasRewards) {
+        resultEl.innerHTML = '';
+        alertBox.className = 'auth-alert error show';
+        const ordersStatus = ordersRes.status === 'rejected' ? ordersRes.reason?.status : null;
+        alertBox.textContent = ordersStatus === 401
+          ? t('track.trackingCodeRequired')
+          : (errors[0] || t('track.noResults', { phone }));
+        return;
+      }
+
+      let rewardsHtml = '';
+      if (hasRewards) {
+        rewardsHtml = `
+          <div class="order-card" style="margin-bottom: var(--space-4);background:linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-alt) 100%);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:18px 20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+              <div>
+                <h3 style="margin:0;font-size:1.15rem;display:flex;align-items:center;gap:8px;">🎁 <span>${I18N && I18N.getLang() === 'ar' ? 'كوبوناتك' : 'Your Coupons'}</span></h3>
+                <div class="mgmt-note" style="margin-top:2px;">${I18N && I18N.getLang() === 'ar' ? 'مسجلة برقم الجوال:' : 'Registered to phone:'} <strong class="ltr-value">${esc(phone)}</strong></div>
+              </div>
+              <div style="background:var(--bg-surface);border:1px solid var(--border-color);padding:6px 14px;border-radius:var(--radius-sm);text-align:center;">
+                <div style="font-size:0.75rem;color:var(--text-secondary);">${I18N && I18N.getLang() === 'ar' ? 'كوبونات متاحة' : 'Available'}</div>
+                <div style="font-size:1.25rem;font-weight:700;color:var(--color-primary);">${availableCoupons.length}</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;">
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                ${availableCoupons.map(c => `
+                  <div style="display:flex;align-items:center;gap:6px;background:var(--bg-surface);border:1px dashed var(--color-terracotta);padding:6px 12px;border-radius:var(--radius-sm);">
+                    <code style="font-weight:700;color:var(--color-terracotta);font-size:0.95rem;">${esc(c.code)}</code>
+                    <span style="color:var(--color-success);font-weight:600;font-size:0.85rem;">(− ${c.discount_type === 'percent' ? c.value + '%' : formatSAR(c.value)})</span>
+                    <button type="button" class="btn btn-outline btn-sm" style="padding:1px 6px;font-size:0.75rem;" onclick="navigator.clipboard?.writeText('${esc(c.code)}');this.textContent='✓';">📋</button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      resultEl.innerHTML = `
+        ${rewardsHtml}
+        ${orders.length ? `
+          <div class="dashboard-header" style="margin-bottom: var(--space-4);">
+            <div><h2 style="font-size:1.4rem;">${t('track.orders')}</h2><p>${t('track.ordersFound', { count: orders.length, phone: esc(phone) })}</p></div>
+          </div>
+          ${orders.map(orderCard).join('')}
+        ` : ''}
+        ${reservations.length ? `
+          <div id="reservationResults">
+            <div class="dashboard-header" style="margin-bottom: var(--space-4);">
+              <div><h2 style="font-size:1.4rem;">${t('track.reservations')}</h2><p>${t('track.reservationsFound', { count: reservations.length, phone: esc(phone) })}</p></div>
+            </div>
+            ${reservations.map(reservationCard).join('')}
+          </div>
+        ` : ''}
+      `;
+
+      // Arriving from the reservation confirmation ("track this
+      // reservation") — bring the reservations straight into view.
+      if (new URLSearchParams(window.location.search).get('focus') === 'reservations') {
+        document.getElementById('reservationResults')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } catch (err) {
+      resultEl.innerHTML = '';
+      alertBox.className = 'auth-alert error show';
+      alertBox.textContent = tr(err.message) || t('track.loadFailed');
+    }
+  }
+
+  document.getElementById('trackForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('trackBtn');
+    const phone = document.getElementById('trackPhone').value.trim();
+    if (!phone) return;
+    const code = (document.getElementById('trackCode').value.trim() || rememberedCode(phone)).toUpperCase();
+
+    btn.disabled = true;
+    btn.textContent = t('track.lookingUp');
+    await track(phone, code);
+    btn.disabled = false;
+    btn.textContent = t('track.track');
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const presetPhone = params.get('phone');
+    const presetCode = params.get('code');
+    if (presetCode) document.getElementById('trackCode').value = presetCode.toUpperCase();
+    if (presetPhone) {
+      document.getElementById('trackPhone').value = presetPhone;
+      if (!presetCode) document.getElementById('trackCode').value = rememberedCode(presetPhone);
+      document.getElementById('trackForm').requestSubmit();
+    }
+  });
+
+  /* A language switch re-renders the result in the new language. */
+  if (I18N) {
+    I18N.onChange(() => {
+      if (lastPhone) track(lastPhone, lastCode);
+    });
+  }
+</script>
+<script src="js/pwa.js?v=8"></script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 /* Everything you are likely to change lives here. Edit, save, push — no build step.
    Empty values hide their button (WhatsApp, email) or make the form fall back to WhatsApp/email. */
 window.TARMEZ = {
-  // the address the hero QR code opens (put the real one here before publishing)
-  siteUrl: 'https://tarmez.sa',
+  // the address the hero QR code opens. Empty = this page's own live demo (demo/), so scanning it tries the ordering.
+  qrUrl: '',
 
   // WhatsApp in international form, digits only, e.g. '9665XXXXXXXX'
   whatsapp: '',

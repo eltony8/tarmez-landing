@@ -82,7 +82,7 @@ html[lang="en"] .hero h1 { max-width: 14ch; }
 .ticks li { display: flex; align-items: center; gap: 10px; color: var(--cream); font-size: 16px; }
 .ticks svg { color: var(--gold); }
 
-.hero-stage { position: relative; height: 640px; display: grid; place-items: center; }
+.hero-stage { position: relative; height: 700px; display: grid; place-items: center; padding-bottom: 70px; }
 .device { position: relative; background: #0E0C0B; box-shadow: 0 40px 90px -20px rgba(0, 0, 0, .7), inset 0 0 0 1.5px #3A332E; }
 .device video { width: 100%; height: 100%; object-fit: cover; background: #fff; }
 .device-phone { width: 290px; aspect-ratio: 390 / 844; border-radius: 46px; padding: 11px; }
@@ -104,9 +104,14 @@ html[dir="rtl"] .device-browser > i { transform: scaleX(-1); }
 .hero-stage.scanned .tent p { font-size: 12px; }
 html[dir="rtl"] .hero-stage { --side: -1; }
 html[dir="ltr"] .hero-stage { --side: 1; }
-.replay { position: absolute; bottom: 0; inset-inline-start: 50%; transform: translateX(50%); background: none; border: 0; color: var(--muted); font: 500 13px var(--body); cursor: pointer; opacity: 0; transition: opacity .4s 1.6s; }
-html[dir="ltr"] .replay { transform: translateX(-50%); }
-.hero-stage.scanned .replay { opacity: 1; }
+/* the live demo: the real site at phone size (390px), scaled into the frame */
+.screen { position: relative; width: 100%; height: 100%; border-radius: 36px; overflow: hidden; background: #fff url('../assets/poster/hero-menu.jpg') center / cover; }
+.screen iframe { position: absolute; left: 0; top: 0; width: 390px; height: 844px; border: 0; transform-origin: 0 0; transform: scale(var(--k, .687)); background: transparent; }
+.try { position: absolute; bottom: -6px; left: 0; right: 0; display: grid; justify-items: center; gap: 4px; text-align: center; opacity: 0; transition: opacity .5s 1.4s; }
+.hero-stage.scanned .try { opacity: 1; }
+.try p { font: 600 15px var(--body); color: var(--gold); }
+.try a, .replay { background: none; border: 0; padding: 0; color: var(--muted); font: 500 13px var(--body); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.replay { text-decoration: none; opacity: .8; }
 
 /* section heads */
 section { padding: 110px 0; }
@@ -237,7 +242,7 @@ section { padding: 110px 0; }
   .nav { display: none; }
   .hero-grid, .panel, .spot, .spot.wide, .contact-grid { grid-template-columns: 1fr; }
   .hero { padding-top: 40px; }
-  .hero-stage { height: 600px; }
+  .hero-stage { height: 680px; }
   .spot.flip .spot-media { order: 0; }
   .steps { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
   .steps::before { display: none; }
@@ -254,10 +259,12 @@ section { padding: 110px 0; }
   .top-row { gap: 10px; min-height: 64px; }
   .top-actions .btn-sm { padding: 0 14px; font-size: 13px; }
   .brand { font-size: 22px; }
-  .hero-stage { height: 540px; }
+  .hero-stage { height: 640px; }
+  .screen { border-radius: 30px; }
   .device-phone { width: 240px; border-radius: 38px; padding: 9px; }
   .device-phone video { border-radius: 30px; }
   .tent { width: 270px; }
+  .hero-stage.scanned .tent { opacity: 0; pointer-events: none; } /* the demo needs the whole screen on a phone */
   .hero-stage.scanned .tent { width: 112px; transform: translate(calc(var(--side) * 118px), 170px) rotate(calc(var(--side) * -6deg)); }
   .steps { grid-template-columns: 1fr; }
   .ring { width: 360px; }

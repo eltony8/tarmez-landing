@@ -20,6 +20,9 @@ window.TARMEZ_TEXT = {
     'hero.scan': 'امسح الكود',
     'hero.order': 'وهذا المنيو',
     'hero.replay': 'أعد المشهد',
+    'hero.try': 'جرّبه بنفسك: اختر طبقًا واطلب من الجوال',
+    'hero.full': 'افتح التجربة في صفحة كاملة',
+    'hero.frameTitle': 'تجربة الطلب من ترميز',
 
     'roles.title': 'شاشة لكل واحد في المطعم',
     'roles.sub': 'نفس الطلب يتحرك بين الضيف والفريق والمطبخ لحظة بلحظة. اللي تشوفه هنا تسجيل حقيقي من النظام.',
@@ -148,6 +151,9 @@ window.TARMEZ_TEXT = {
     'hero.scan': 'Scan the code',
     'hero.order': 'and here is the menu',
     'hero.replay': 'Play again',
+    'hero.try': 'Try it: pick a dish and order from the phone',
+    'hero.full': 'Open the demo full screen',
+    'hero.frameTitle': 'Tarmez ordering demo',
 
     'roles.title': 'A screen for everyone in the restaurant',
     'roles.sub': 'One order moves between the guest, the team and the kitchen as it happens. Everything here is recorded from the real system.',

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="_demo/mock.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-content="site_title">Tarmez — Fine Dining & Food Ordering</title>
+<meta name="description" content="Tarmez is a modern fine-dining restaurant offering an elevated menu, table reservations, and doorstep delivery across the city." data-content="site_meta_description">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#1F1B18">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tarmez">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="js/palette.js?v=6"></script>
+<link rel="stylesheet" href="css/styles.css?v=53">
+<link rel="stylesheet" href="css/i18n.css?v=9">
+<link rel="stylesheet" href="css/home.css?v=7">
+<link rel="stylesheet" href="css/motion.css?v=2">
+<link rel="stylesheet" href="css/notifications.css?v=3">
+<link rel="stylesheet" href="css/nearby-offers.css?v=1">
+<script>try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');}}catch(e){}</script>
+<script>(function(){try{var t=localStorage.getItem('savoria_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<script>(function(){try{var L=localStorage.getItem('savoria_lang')||'en';if(L!=='ar'&&L!=='en'){L='en';}document.documentElement.setAttribute('lang',L);document.documentElement.setAttribute('dir',L==='ar'?'rtl':'ltr');if(L==='ar'){var l=document.createElement('link');l.id='savoria-arabic-font';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Alexandria:wght@300;400;500;600;700&display=swap';document.head.appendChild(l);}}catch(e){}})();</script>
+</head>
+<body class="home-page">
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg?v=11" alt="Tarmez" data-content-img="logo"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <div class="nav-item-dropdown">
+        <a href="#menu"><span data-i18n="nav.menu">Menu</span></a>
+        <div class="nav-dropdown-panel">
+          <a href="#menu" data-cat="starters"><span data-i18n="nav.starters">Starters</span> <span class="count">4 dishes</span></a>
+          <a href="#menu" data-cat="mains"><span data-i18n="nav.mains">Mains</span> <span class="count">4 dishes</span></a>
+          <a href="#menu" data-cat="desserts"><span data-i18n="nav.desserts">Desserts</span> <span class="count">2 dishes</span></a>
+          <a href="#menu" data-cat="beverages"><span data-i18n="nav.beverages">Beverages</span> <span class="count">2 dishes</span></a>
+        </div>
+      </div>
+      <a href="#reservation" data-i18n="nav.reservations">Reservations</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <div class="mobile-nav-auth" id="mobileNavAuth">
+        <a href="login.html" class="btn btn-primary btn-block btn-sm" id="mobileNavLoginLink" data-i18n="nav.logIn">Log In</a>
+      </div>
+    </nav>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-i18n-attr="aria-label:nav.toggleDarkMode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <!-- The language control is inserted right here by js/lang-switcher.js -->
+
+      <a href="cart.html" class="cart-trigger" id="cartTrigger" aria-label="Open cart" data-i18n-attr="aria-label:nav.openCart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+
+      <!-- Guests can order with just a name and phone. Signing in adds the
+           loyalty wallet: stored points, coupons created from them, and
+           stacking several coupons on one bill. -->
+      <a href="login.html" class="nav-login-btn" id="navLoginLink">
+        <svg class="nav-login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        <span class="nav-login-label" data-i18n="nav.logIn">Log In</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" data-i18n-attr="aria-label:nav.toggleMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-eyebrow" data-content="restaurant_eyebrow">Est. 2019 · Downtown Riyadh</span>
+      <h1><span data-content="hero_headline_before">Modern flavors,</span> <em data-content="hero_headline_highlight">timeless</em> <span data-content="hero_headline_after">hospitality.</span></h1>
+      <p data-content="restaurant_intro">Tarmez brings together seasonal ingredients and refined technique — dine in our candlelit hall, reserve a table in seconds, or have chef-crafted dishes delivered to your door.</p>
+      <div class="hero-actions">
+        <a href="#reservation" class="btn btn-primary" data-content="hero_cta_primary">Reserve a Table</a>
+        <a href="#menu" class="btn btn-outline" data-content="hero_cta_secondary">Order Online</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong data-content="hero_stat1_value">4.9★</strong><span data-content="hero_stat1_label">Average rating</span></div>
+        <div class="hero-stat"><strong data-content="hero_stat2_value">12k+</strong><span data-content="hero_stat2_label">Orders delivered</span></div>
+        <div class="hero-stat"><strong data-content="hero_stat3_value">7</strong><span data-content="hero_stat3_label">Years serving the city</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-visual-frame">
+        <span class="hero-tag-pill" data-content="hero_pill">Chef's Table</span>
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Tarmez candlelit dining hall with plated dishes" data-content-img="hero_main">
+      </div>
+      <div class="hero-visual-accent">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80" alt="Slow-braised lamb shank plated dish" data-content-img="hero_accent">
+      </div>
+      <div class="hero-badge-card">
+        <div class="badge-icon" data-content="hero_badge_value">4.9</div>
+        <div><strong data-content="hero_badge_title">Excellent Rating</strong><span data-content="hero_badge_text">2,300+ verified reviews</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-media reveal">
+      <div class="frame-main">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" alt="Chef plating a dish in the Tarmez kitchen" data-content-img="about_main">
+      </div>
+      <div class="frame-accent">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80" alt="Tarmez dining hall interior" data-content-img="about_accent">
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <span class="section-eyebrow" data-content="about_eyebrow">Our Story</span>
+      <h2 data-content="about_title">A kitchen built on craft, not shortcuts.</h2>
+      <p data-content="about_text">Founded by a small team of chefs who trained across Riyadh, Dubai, and Lyon, Tarmez was built to prove that thoughtful ingredients and unhurried technique still matter.</p>
+      <div class="about-points">
+        <div class="about-point"><div class="icon" data-content="about_point1_icon">1</div><div><h4 data-content="about_point1_title">Locally sourced</h4><p data-content="about_point1_text">Produce delivered daily from trusted regional farms.</p></div></div>
+        <div class="about-point"><div class="icon" data-content="about_point2_icon">2</div><div><h4 data-content="about_point2_title">Chef-led menu</h4><p data-content="about_point2_text">Seasonal dishes designed and tested in-house every quarter.</p></div></div>
+        <div class="about-point"><div class="icon" data-content="about_point3_icon">3</div><div><h4 data-content="about_point3_title">Order online in seconds</h4><p data-content="about_point3_text">Real-time menu availability, secure checkout, live status updates.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section class="menu" id="menu">
+  <div class="container">
+
+    <!-- Shown only when the guest arrived by scanning a table's QR code. -->
+    <div class="table-banner" id="tableBanner" style="display:none;">
+      <span class="table-banner-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M5 6h14l1 4H4l1-4Z"/><path d="M6 10v9M18 10v9M3 19h18"/></svg>
+      </span>
+      <div class="table-banner-text">
+        <strong id="tableBannerTitle"></strong>
+        <span id="tableBannerNote"></span>
+      </div>
+    </div>
+
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-content="menu_eyebrow">The Menu</span>
+      <h2 data-content="menu_title">Order straight from the kitchen</h2>
+      <p data-content="menu_text">This menu is loaded live from the Tarmez database — add dishes to your cart and check out below.</p>
+    </div>
+
+    <div class="menu-filters">
+      <button class="menu-filter-btn active" data-filter="all" data-i18n="menu.filterAll">All</button>
+      <button class="menu-filter-btn" data-filter="starters" data-i18n="menu.filterStarters">Starters</button>
+      <button class="menu-filter-btn" data-filter="mains" data-i18n="menu.filterMains">Mains</button>
+      <button class="menu-filter-btn" data-filter="desserts" data-i18n="menu.filterDesserts">Desserts</button>
+      <button class="menu-filter-btn" data-filter="beverages" data-i18n="menu.filterBeverages">Beverages</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+      <p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);" data-i18n="menu.loading">Loading menu…</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVATION ================= -->
+<section class="reservation" id="reservation">
+  <div class="container">
+    <div class="reservation-text reveal">
+      <span class="section-eyebrow" data-content="reservation_eyebrow">Book Ahead</span>
+      <h2 data-content="reservation_title">Reserve your table</h2>
+      <p data-content="reservation_text">Tables fill quickly on weekends. Secure yours in under a minute.</p>
+      <ul class="reservation-perks">
+        <li data-content="reservation_perk1">Instant confirmation by email</li>
+        <li data-content="reservation_perk2">Free cancellation up to 2 hours before</li>
+        <li data-content="reservation_perk3">Special requests welcome (allergies, occasions)</li>
+        <li data-content="reservation_perk4">Priority seating for parties of 6+</li>
+      </ul>
+    </div>
+
+    <form class="reservation-form reveal" id="reservationForm" novalidate>
+      <div class="form-success-msg" id="reservationSuccess"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="resName" data-i18n="reservation.fullName">Full Name</label>
+          <input type="text" id="resName" required>
+        </div>
+        <div class="form-group">
+          <label for="resPhone" data-i18n="reservation.phone">Phone</label>
+          <input type="tel" id="resPhone" required dir="ltr">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="resDate" data-i18n="reservation.date">Date</label>
+          <input type="date" id="resDate" required>
+        </div>
+        <div class="form-group">
+          <label for="resTime" data-i18n="reservation.time">Time</label>
+          <select id="resTime" required>
+            <option value="" data-i18n="reservation.selectTime">Select time</option>
+            <option>6:00 PM</option><option>6:30 PM</option><option>7:00 PM</option>
+            <option>7:30 PM</option><option>8:00 PM</option><option>8:30 PM</option><option>9:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="resGuests" data-i18n="reservation.partySize">Party Size</label>
+        <select id="resGuests" required>
+          <option value="" data-i18n="reservation.selectGuests">Select guests</option>
+          <option value="1" data-i18n="reservation.guestCount" data-i18n-params='{"count":1}'>1 guest</option>
+          <option value="2" data-i18n="reservation.guestCount" data-i18n-params='{"count":2}'>2 guests</option>
+          <option value="3" data-i18n="reservation.guestCount" data-i18n-params='{"count":3}'>3 guests</option>
+          <option value="4" data-i18n="reservation.guestCount" data-i18n-params='{"count":4}'>4 guests</option>
+          <option value="5" data-i18n="reservation.guestCount" data-i18n-params='{"count":5}'>5 guests</option>
+          <option value="6+" data-i18n="reservation.guestsPlus">6+ guests</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="resNotes" data-i18n="reservation.specialRequests">Special Requests (optional)</label>
+        <textarea id="resNotes" placeholder="Allergies, celebration, seating preference..." data-i18n-attr="placeholder:reservation.notesPlaceholder"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" data-i18n="reservation.submit">Confirm Reservation</button>
+    </form>
+
+    <!-- Reservations belong to a registered customer. Guests see this
+         card instead of the form; app.js swaps them by sign-in state. -->
+    <div class="reservation-form reservation-gate reveal" id="reservationAuthGate" style="display:none;" aria-hidden="true">
+      <span class="reservation-gate-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M8 15h.01M12 15h.01M16 15h.01"/></svg>
+      </span>
+      <h3 data-i18n="reservation.loginRequiredTitle">Sign in to reserve your table</h3>
+      <p data-i18n="reservation.loginRequiredText">Table reservations are for registered guests only. Sign in or create an account to book, and we will send the confirmation and any updates to your account.</p>
+      <div class="reservation-gate-actions">
+        <a class="btn btn-primary" href="login.html?next=index.html%3Ffocus%3Dreservation" data-i18n="nav.logIn">Log In</a>
+        <a class="btn btn-outline" href="register.html?next=index.html%3Ffocus%3Dreservation" data-i18n="reservation.createAccount">Create an account</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" data-content="reviews_eyebrow">Guest Reviews</span>
+      <h2 data-content="reviews_title">What diners are saying</h2>
+    </div>
+    <div class="testimonial-track" id="testimonialTrack">
+      <div class="testimonial-slide active">
+        <div class="stars">★★★★★</div>
+        <p>"Every course felt intentional. The lamb shank has genuinely ruined every other restaurant for me."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt="Hina R.">
+          <div><strong>Hina R.</strong><span>Regular guest, 3 years</span></div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="stars">★★★★★</div>
+        <p>"Ordered delivery on a whim through the site — it arrived hot, and the checkout took under a minute."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt="Bilal S.">
+          <div><strong>Bilal S.</strong><span>First-time customer</span></div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="stars">★★★★★</div>
+        <p>"Booked a table for eight on short notice through the site — smooth process, confirmed instantly."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&q=80" alt="Farah A.">
+          <div><strong>Farah A.</strong><span>Corporate events client</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-dots" id="testimonialDots"></div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<div class="gallery-band">
+  <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Restaurant interior" data-content-img="gallery_1">
+  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80" alt="Plated dish" data-content-img="gallery_2">
+  <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=400&q=80" alt="Dessert plating" data-content-img="gallery_3">
+  <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=400&q=80" alt="Chef at work" data-content-img="gallery_4">
+  <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&q=80" alt="Table setting" data-content-img="gallery_5">
+</div>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info-card reveal">
+      <h3 data-content="contact_title">Visit or reach us</h3>
+      <div class="contact-info-item" id="contactAddressItem">
+        <div class="icon">📍</div>
+        <div><strong data-content="contact_address_label">Address</strong><span data-content="contact_address">King Fahd Road, Al Olaya, Riyadh</span></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="icon">📞</div>
+        <div><strong data-content="contact_phone_label">Phone</strong><span data-content="contact_phone" class="ltr-value">+966 11 000 0000</span><span data-content="contact_phone_secondary" hidden></span></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="icon">✉️</div>
+        <div><strong data-content="contact_email_label">Email</strong><span data-content="contact_email" class="ltr-value">hello@tarmez.example</span></div>
+      </div>
+      <div class="contact-hours">
+        <div><span data-i18n="contact.hoursMonThu">Mon – Thu</span><span data-i18n="contact.hoursMonThuValue">5:00 PM – 11:00 PM</span></div>
+        <div><span data-i18n="contact.hoursFriSun">Fri – Sun</span><span data-i18n="contact.hoursFriSunValue">1:00 PM – 12:00 AM</span></div>
+      </div>
+    </div>
+    <div class="contact-form-card reveal">
+      <h3 data-content="contact_card_title">Send us a message</h3>
+      <p style="color:var(--color-text-muted);font-size:0.9rem;"><span data-content="contact_card_text">For order or reservation questions, call us directly for the fastest response. General inquiries:</span> <strong data-content="contact_email" class="ltr-value">hello@tarmez.example</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.svg?v=11" alt="Tarmez" data-content-img="logo">
+        <p data-content="footer_about">A modern fine-dining kitchen serving Riyadh since 2019 — dine in, pick up, or have it delivered.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram" data-content-attr="href" data-content="social_instagram">IG</a>
+          <a href="#" aria-label="Facebook" data-content-attr="href" data-content="social_facebook">FB</a>
+          <a href="#" aria-label="TikTok" data-content-attr="href" data-content="social_tiktok">TT</a>
+        </div>
+      </div>
+      <div>
+        <h4 data-content="footer_explore_title">Explore</h4>
+        <ul>
+          <li><a href="#about" data-i18n="footer.exploreAbout">About</a></li>
+          <li><a href="#menu" data-i18n="footer.exploreOrder">Order Online</a></li>
+          <li><a href="#reservation" data-i18n="footer.exploreReservations">Reservations</a></li>
+          <li><a href="#reviews" data-i18n="footer.exploreReviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-content="footer_account_title">Account</h4>
+        <ul>
+          <li><a href="track-order.html" data-i18n="footer.trackOrder">Track an Order or Reservation</a></li>
+          <li><a href="login.html" data-i18n="footer.staffLogin">Staff Log In</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-content="footer_support_title">Support</h4>
+        <ul>
+          <li><a href="track-order.html" data-i18n="footer.trackOrder">Track an Order or Reservation</a></li>
+          <li><a href="#contact" data-i18n="footer.contactUs">Contact Us</a></li>
+          <li><a href="privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="footer.termsOfService">Terms of Service</a></li>
+          <li><a href="cookies.html" data-i18n="footer.cookiePolicy">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> <span data-content="restaurant_name">Tarmez</span>. <span data-i18n="footer.rights">All rights reserved.</span></span>
+      <span><a href="privacy.html" data-i18n="footer.privacy">Privacy</a><a href="terms.html" data-i18n="footer.terms">Terms</a><a href="cookies.html" data-i18n="footer.cookies">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top" data-i18n-attr="aria-label:footer.scrollTop">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="js/theme.js?v=11"></script>
+<script src="js/locales/en.js?v=40"></script>
+<script src="js/locales/ar.js?v=40"></script>
+<script src="js/i18n.js?v=8"></script>
+<script src="js/lang-switcher.js?v=3"></script>
+<script src="js/api.js?v=30"></script>
+<script src="js/features.js?v=1"></script>
+<script src="js/app.js?v=46"></script>
+<script src="js/notifications.js?v=7"></script>
+<script src="js/content.js?v=6"></script>
+<script src="js/motion.js?v=3"></script>
+<script src="js/pwa.js?v=8"></script>
+<script src="js/nearby-offers.js?v=2"></script>
+</body>
+</html>

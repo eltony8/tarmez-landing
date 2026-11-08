@@ -1,0 +1,690 @@
+/* =========================================================
+   Tarmez — Home page editorial layer
+   Loaded by index.html only, after styles.css and i18n.css.
+   Deepens the palette, refines the hero and the About story,
+   and gives every homepage section a quieter, more premium
+   rhythm. Layout structure, markup and behaviour are untouched.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. Palette — warm parchment, espresso and antique gold
+   --------------------------------------------------------- */
+body.home-page {
+  --bg-page: #F7F1E5;
+  --bg-surface: #FFFCF6;
+  --bg-surface-alt: #EEE2CC;
+  --text-primary: var(--dk-241F19);
+  --text-secondary: #6B6053;
+  --border-color: #E4D5BD;
+  --shadow-color: rgba(var(--dark-3-rgb), 0.13);
+  --color-terracotta: var(--accent-deep);
+  --color-terracotta-dark: var(--accent-deeper);
+  --color-gold: #C69C46;
+  --color-gold-light: #E9CE91;
+  --color-sage: #66735A;
+
+  --home-glow-gold: rgba(var(--gold-soft-rgb), 0.14);
+  --home-glow-clay: rgba(var(--accent-deep-rgb), 0.08);
+  --home-tint: #F3E9D7;
+  --home-tint-deep: #EDDFC6;
+  --about-frame: #FBF6EC;
+
+  background:
+    radial-gradient(1100px 540px at 92% -8%, rgba(var(--gold-soft-rgb), 0.13), transparent 62%),
+    radial-gradient(900px 520px at -10% 24%, rgba(var(--accent-deep-rgb), 0.07), transparent 60%),
+    var(--bg-page);
+}
+
+[data-theme="dark"] body.home-page {
+  --bg-page: var(--dark-1);
+  --bg-surface: var(--dark-2);
+  --bg-surface-alt: var(--dk-272019);
+  --text-primary: #F4EDDF;
+  --text-secondary: #B5AA98;
+  --border-color: var(--dk-3A3024);
+  --input-bg: var(--dark-1);
+  --color-gold: #E4BA67;
+  --color-gold-light: #F1D69C;
+  --color-terracotta: #D27345;
+  --color-terracotta-dark: #B25A31;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  --home-glow-gold: rgba(var(--gold-soft-rgb), 0.10);
+  --home-glow-clay: rgba(var(--accent-bright-rgb), 0.09);
+  --home-tint: var(--dk-181410);
+  --home-tint-deep: var(--dk-1E1813);
+  --about-frame: var(--dark-2);
+
+  background:
+    radial-gradient(1000px 520px at 92% -8%, rgba(var(--gold-soft-rgb), 0.09), transparent 62%),
+    radial-gradient(900px 520px at -10% 22%, rgba(var(--accent-bright-rgb), 0.07), transparent 60%),
+    var(--bg-page);
+}
+
+/* ---------------------------------------------------------
+   2. Shared rhythm, eyebrows and buttons
+   --------------------------------------------------------- */
+.home-page .section-header {
+  max-width: 680px;
+  margin-bottom: clamp(2.4rem, 4vw, 3.4rem);
+}
+.home-page .section-header h2 {
+  font-size: clamp(2.05rem, 4vw, 3.05rem);
+  letter-spacing: -0.018em;
+}
+.home-page .section-header p {
+  font-size: 1.04rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+.home-page .section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-terracotta);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  margin-bottom: 0.85rem;
+}
+.home-page .section-eyebrow::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold));
+}
+.home-page .section-eyebrow::after {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-gold), transparent);
+}
+
+.home-page .btn-primary {
+  background: linear-gradient(135deg, var(--color-terracotta) 0%, var(--color-terracotta-dark) 100%);
+  box-shadow: 0 12px 26px rgba(var(--accent-deep-rgb), 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  letter-spacing: 0.01em;
+}
+.home-page .btn-primary:hover {
+  box-shadow: 0 18px 38px rgba(var(--accent-deep-rgb), 0.34);
+}
+.home-page .btn-outline {
+  border-color: rgba(var(--gold-light-rgb), 0.45);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(4px);
+}
+.home-page .btn-outline:hover {
+  border-color: var(--color-gold);
+  background: rgba(var(--gold-soft-rgb), 0.16);
+}
+
+/* The fixed bar gets a quieter, glassier treatment once scrolled. */
+.home-page .navbar.scrolled,
+.home-page .navbar.navbar-solid {
+  background: rgba(var(--dark-1-rgb), 0.92);
+  border-bottom: 1px solid rgba(var(--gold-light-rgb), 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px) saturate(120%);
+}
+/* The open mobile drawer is position:fixed; any backdrop-filter on the bar
+   would make it the drawer's containing block and collapse the menu. */
+.home-page .navbar.nav-open {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ---------------------------------------------------------
+   3. Hero — candlelit dining room
+   --------------------------------------------------------- */
+.home-page .hero {
+  min-height: 100svh;
+  background:
+    radial-gradient(1200px 720px at 12% 6%, rgba(var(--gold-soft-rgb), 0.20), transparent 56%),
+    radial-gradient(900px 620px at 94% 86%, rgba(var(--accent-deep-rgb), 0.26), transparent 58%),
+    linear-gradient(155deg, var(--dk-14100C) 0%, var(--dark-2) 46%, var(--dk-2B2118) 100%);
+}
+.home-page .hero::before {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 100%),
+    radial-gradient(circle at 18% 22%, rgba(var(--gold-light-rgb), 0.12), transparent 44%);
+  background-size: 46px 46px, auto;
+  opacity: 0.6;
+  mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+}
+/* Soft hand-off from the dark room into the parchment page. */
+.home-page .hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 150px;
+  background: linear-gradient(180deg, rgba(var(--dark-1-rgb), 0) 0%, var(--bg-page) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.home-page .hero .container {
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+.home-page .hero-eyebrow {
+  color: var(--color-gold-light);
+  font-size: 0.74rem;
+  letter-spacing: 0.24em;
+  gap: 12px;
+}
+.home-page .hero-eyebrow::before {
+  width: 36px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-light));
+}
+.home-page .hero h1 {
+  font-size: clamp(2.6rem, 5.1vw, 4.3rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  margin-bottom: 1.35rem;
+}
+.home-page .hero h1 em {
+  position: relative;
+  color: var(--color-gold-light);
+  font-style: italic;
+}
+.home-page .hero h1 em::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--gold-light-rgb), 0.7), transparent);
+  pointer-events: none;
+}
+.home-page .hero p {
+  max-width: 560px;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: rgba(251, 246, 238, 0.76);
+  margin-bottom: 2.1rem;
+}
+.home-page .hero-actions { gap: 0.85rem; }
+.home-page .hero-stats {
+  gap: 0;
+  margin-top: 3rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(251, 246, 238, 0.12);
+}
+.home-page .hero-stat {
+  padding-inline: 1.75rem;
+  border-inline-start: 1px solid rgba(251, 246, 238, 0.12);
+}
+.home-page .hero-stat:first-child {
+  padding-inline-start: 0;
+  border-inline-start: 0;
+}
+.home-page .hero-stat strong {
+  font-size: 2.05rem;
+  font-weight: 600;
+  color: var(--color-gold-light);
+  letter-spacing: 0.01em;
+}
+.home-page .hero-stat span {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: rgba(251, 246, 238, 0.62);
+}
+
+/* The banner gets a double gold frame instead of a plain card edge. */
+.home-page .hero-visual-frame {
+  border-radius: 30px;
+  border: 1px solid rgba(var(--gold-light-rgb), 0.32);
+  box-shadow: 0 48px 100px rgba(0, 0, 0, 0.55);
+}
+.home-page .hero-visual-frame::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(var(--gold-light-rgb), 0.34);
+  border-radius: 19px;
+  z-index: 3;
+  pointer-events: none;
+}
+.home-page .hero-visual-frame::after {
+  background: linear-gradient(180deg, rgba(var(--dark-1-rgb), 0) 42%, rgba(var(--dark-1-rgb), 0.74) 100%);
+}
+.home-page .hero-visual-accent {
+  border: 5px solid var(--dark-2);
+  border-radius: 20px;
+  box-shadow: 0 30px 64px rgba(0, 0, 0, 0.5);
+}
+.home-page .hero-badge-card {
+  max-width: 250px;
+  padding: 0.9rem 1.15rem;
+  background: rgba(var(--dark-1-rgb), 0.8);
+  border: 1px solid rgba(var(--gold-light-rgb), 0.26);
+  border-radius: 16px;
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.46);
+  backdrop-filter: blur(16px) saturate(125%);
+  color: var(--on-dark-text);
+}
+.home-page .hero-badge-card .badge-icon {
+  background: linear-gradient(135deg, var(--color-gold-light), #B98B33);
+  color: var(--dk-17120E);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.home-page .hero-badge-card strong { color: var(--on-dark-text); }
+.home-page .hero-badge-card span { color: rgba(251, 246, 238, 0.62); }
+.home-page .hero-tag-pill {
+  background: rgba(var(--dark-1-rgb), 0.55);
+  border-color: rgba(var(--gold-light-rgb), 0.36);
+  letter-spacing: 0.18em;
+}
+
+/* ---------------------------------------------------------
+   4. About — an editorial spread
+   --------------------------------------------------------- */
+.home-page .about {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(5rem, 9vw, 8rem);
+  background:
+    radial-gradient(760px 440px at 88% -12%, var(--home-glow-gold), transparent 66%),
+    radial-gradient(620px 400px at 2% 108%, var(--home-glow-clay), transparent 70%),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--about-frame) 46%, var(--bg-page) 100%);
+}
+.home-page .about::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(var(--dark-3-rgb), 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(180deg, transparent, #000 28%, #000 72%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 28%, #000 72%, transparent);
+  opacity: 0.5;
+}
+[data-theme="dark"] .home-page .about::before {
+  background-image: radial-gradient(rgba(244, 237, 223, 0.05) 1px, transparent 1px);
+}
+.home-page .about .container {
+  position: relative;
+  z-index: 1;
+}
+.home-page .about-grid {
+  gap: clamp(2.6rem, 6vw, 5.5rem);
+}
+
+/* Offset gold frame drawn behind the photo pair. */
+.home-page .about-media { z-index: 0; }
+.home-page .about-media::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset-block-start: -18px;
+  inset-block-end: 18px;
+  inset-inline-start: -18px;
+  inset-inline-end: 18px;
+  border: 1px solid rgba(var(--gold-soft-rgb), 0.5);
+  border-radius: 34px;
+  pointer-events: none;
+}
+.home-page .about-media .frame-main {
+  position: relative;
+  z-index: 1;
+  border-radius: 30px;
+  box-shadow: 0 36px 74px rgba(var(--dark-3-rgb), 0.18);
+}
+.home-page .about-media .frame-accent {
+  z-index: 2;
+  border: 8px solid var(--about-frame);
+  border-radius: 20px;
+  box-shadow: 0 26px 54px rgba(var(--dark-3-rgb), 0.22);
+}
+
+.home-page .about-text .section-eyebrow { margin-bottom: 0.9rem; }
+.home-page .about-text h2 {
+  font-size: clamp(2rem, 3.7vw, 3rem);
+  letter-spacing: -0.018em;
+  line-height: 1.16;
+  margin-bottom: 1.2rem;
+}
+.home-page .about-text > p {
+  max-width: 53ch;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+.home-page .about-points {
+  gap: 0.85rem;
+  margin-top: 2.2rem;
+}
+.home-page .about-point {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-surface) 78%, transparent);
+  box-shadow: 0 8px 22px rgba(var(--dark-3-rgb), 0.05);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.home-page .about-point:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--gold-soft-rgb), 0.55);
+  box-shadow: 0 16px 36px rgba(var(--dark-3-rgb), 0.09);
+}
+.home-page .about-point .icon {
+  width: 46px;
+  height: 46px;
+  background: transparent;
+  border: 1px solid rgba(var(--gold-soft-rgb), 0.55);
+  box-shadow: inset 0 0 0 4px rgba(var(--gold-soft-rgb), 0.08);
+  color: var(--color-terracotta);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+.home-page .about-point h4 {
+  font-size: 1rem;
+  letter-spacing: 0.005em;
+  margin-bottom: 3px;
+}
+.home-page .about-point p {
+  font-size: 0.89rem;
+  line-height: 1.7;
+}
+
+/* ---------------------------------------------------------
+   5. Menu — cream gallery wall
+   --------------------------------------------------------- */
+.home-page .menu {
+  position: relative;
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background:
+    radial-gradient(900px 480px at 50% -10%, var(--home-glow-gold), transparent 62%),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--home-tint) 48%, var(--bg-page) 100%);
+}
+.home-page .menu-filter-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+.home-page .menu-filter-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(var(--gold-soft-rgb), 0.6);
+}
+.home-page .menu-filter-btn.active {
+  color: #FFFFFF;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--color-terracotta), var(--color-terracotta-dark));
+  box-shadow: 0 10px 24px rgba(var(--accent-deep-rgb), 0.26);
+}
+.home-page .menu-card {
+  border-radius: 20px;
+  border-color: var(--border-color);
+  box-shadow: 0 12px 30px rgba(var(--dark-3-rgb), 0.07);
+}
+.home-page .menu-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(var(--gold-soft-rgb), 0.45);
+  box-shadow: 0 28px 58px rgba(var(--dark-3-rgb), 0.16);
+}
+.home-page .menu-card-body { padding: 1.35rem 1.4rem 1.5rem; }
+.home-page .menu-card-top h3 { font-size: 1.18rem; letter-spacing: -0.01em; }
+.home-page .menu-card-price { font-size: 1.14rem; }
+
+/* ---------------------------------------------------------
+   6. Reservation — private dining room
+   --------------------------------------------------------- */
+.home-page .reservation {
+  background:
+    radial-gradient(900px 520px at 86% -12%, rgba(var(--gold-soft-rgb), 0.18), transparent 60%),
+    radial-gradient(720px 500px at 6% 112%, rgba(var(--accent-deep-rgb), 0.18), transparent 66%),
+    linear-gradient(150deg, var(--dark-1) 0%, var(--dk-241D16) 55%, var(--dk-2C2218) 100%);
+}
+.home-page .reservation-form {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(var(--gold-soft-rgb), 0.24);
+  box-shadow: 0 36px 84px rgba(0, 0, 0, 0.42);
+}
+.home-page .reservation-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  pointer-events: none;
+}
+.reservation-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  min-height: 100%;
+}
+.reservation-gate-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(var(--gold-rgb), 0.16);
+  color: var(--color-terracotta);
+}
+.reservation-gate-icon svg { width: 26px; height: 26px; }
+.reservation-gate h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text-primary);
+}
+.reservation-gate p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+.reservation-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ---------------------------------------------------------
+   7. Testimonials — quiet parchment card
+   --------------------------------------------------------- */
+.home-page .testimonials {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background:
+    radial-gradient(820px 440px at 50% 0%, var(--home-glow-gold), transparent 64%),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--home-tint) 52%, var(--bg-page) 100%);
+}
+.home-page .testimonials::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.12em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(11rem, 22vw, 20rem);
+  line-height: 1;
+  color: rgba(var(--gold-soft-rgb), 0.13);
+  pointer-events: none;
+}
+.home-page .testimonials .container {
+  position: relative;
+  z-index: 1;
+}
+.home-page .testimonial-slide p {
+  font-size: clamp(1.28rem, 2.2vw, 1.72rem);
+  line-height: 1.65;
+  letter-spacing: -0.008em;
+}
+.home-page .testimonial-slide .stars {
+  color: var(--color-gold);
+  letter-spacing: 0.18em;
+}
+.home-page .testimonial-author img {
+  border: 2px solid rgba(var(--gold-soft-rgb), 0.5);
+  box-shadow: 0 10px 24px rgba(var(--dark-3-rgb), 0.14);
+}
+.home-page .testimonial-dots button {
+  width: 7px;
+  height: 7px;
+  background: var(--color-terracotta);
+}
+
+/* ---------------------------------------------------------
+   8. Gallery band — framed prints
+   --------------------------------------------------------- */
+.home-page .gallery-band {
+  gap: 6px;
+  padding: 6px;
+  background: var(--bg-page);
+  border-block: 1px solid rgba(var(--gold-soft-rgb), 0.18);
+}
+.home-page .gallery-band img {
+  height: 232px;
+  border-radius: 12px;
+  filter: saturate(0.88) contrast(1.02);
+  box-shadow: 0 12px 26px rgba(var(--dark-3-rgb), 0.08);
+}
+
+/* ---------------------------------------------------------
+   9. Contact — polished front desk
+   --------------------------------------------------------- */
+.home-page .contact {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background:
+    radial-gradient(760px 420px at 90% 0%, var(--home-glow-gold), transparent 66%),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--about-frame) 100%);
+}
+.home-page .contact-grid { gap: clamp(1.5rem, 4vw, 2.6rem); align-items: center; }
+.home-page .contact-info-card {
+  background:
+    radial-gradient(520px 320px at 100% 0%, rgba(var(--gold-soft-rgb), 0.16), transparent 62%),
+    linear-gradient(160deg, var(--dark-1) 0%, var(--dk-2A2017) 100%);
+  border: 1px solid rgba(var(--gold-soft-rgb), 0.22);
+  border-radius: 28px;
+  box-shadow: 0 36px 74px rgba(var(--dark-3-rgb), 0.22);
+}
+.home-page .contact-form-card {
+  border-radius: 28px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 24px 54px rgba(var(--dark-3-rgb), 0.08);
+}
+
+/* ---------------------------------------------------------
+   10. Footer — evening lounge
+   --------------------------------------------------------- */
+.home-page .footer {
+  background: linear-gradient(180deg, var(--dk-15110D) 0%, var(--dark-1) 100%);
+  border-top: 1px solid rgba(var(--gold-soft-rgb), 0.24);
+  padding-top: clamp(3.5rem, 6vw, 5rem);
+}
+.home-page .footer h4 {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+.home-page .footer-social a {
+  border: 1px solid rgba(var(--gold-light-rgb), 0.24);
+  background: rgba(255, 255, 255, 0.04);
+}
+.home-page .footer-social a:hover {
+  border-color: var(--color-gold);
+}
+
+/* ---------------------------------------------------------
+   11. Arabic refinements for the new typography
+   --------------------------------------------------------- */
+[lang="ar"] body.home-page .hero h1 {
+  font-size: clamp(2.4rem, 4.7vw, 3.95rem);
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+[lang="ar"] body.home-page .hero h1 em {
+  font-style: normal;
+}
+[lang="ar"] body.home-page .hero h1 em::after {
+  bottom: -0.08em;
+  opacity: 0.7;
+}
+[lang="ar"] body.home-page .hero-eyebrow,
+[lang="ar"] body.home-page .section-eyebrow,
+[lang="ar"] body.home-page .hero-tag-pill {
+  letter-spacing: 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+[lang="ar"] body.home-page .section-header h2,
+[lang="ar"] body.home-page .about-text h2 {
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+[lang="ar"] body.home-page .about-text > p {
+  line-height: 2;
+}
+[lang="ar"] body.home-page .testimonial-slide p {
+  font-style: normal;
+  line-height: 1.8;
+}
+[lang="ar"] body.home-page .footer h4 {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.85rem;
+}
+[lang="ar"] body.home-page .hero-stat strong {
+  font-size: 2.15rem;
+}
+
+/* ---------------------------------------------------------
+   12. Responsive tuning
+   --------------------------------------------------------- */
+@media (max-width: 960px) {
+  .home-page .about-media::before { inset-inline-start: -12px; inset-block-start: -12px; }
+  .home-page .hero-stats { justify-content: center; }
+  .home-page .hero-stat:first-child { padding-inline-start: 1.75rem; }
+}
+@media (max-width: 720px) {
+  .home-page .hero { min-height: auto; padding-block: 7rem 3.5rem; }
+  .home-page .hero h1 { font-size: clamp(2.25rem, 8.5vw, 3rem); }
+  [lang="ar"] body.home-page .hero h1 { font-size: clamp(2.15rem, 8vw, 2.9rem); }
+  .home-page .hero p { font-size: 1rem; }
+  .home-page .hero-stats {
+    gap: 1.1rem 1.6rem;
+    flex-wrap: wrap;
+    padding-top: 1.3rem;
+  }
+  .home-page .hero-stat {
+    padding-inline: 0;
+    border-inline-start: 0;
+    min-width: 30%;
+  }
+  .home-page .hero-stat strong { font-size: 1.7rem; }
+  .home-page .about { padding-block: 4.5rem; }
+  .home-page .about-media::before { display: none; }
+  .home-page .about-point { padding: 0.9rem 1rem; }
+  .home-page .gallery-band img { height: 150px; }
+  .home-page .testimonials::before { font-size: 9rem; top: 0.05em; }
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .home-page .reveal { opacity: 1; transform: none; }
+  .home-page .menu-card,
+  .home-page .about-point,
+  .home-page .gallery-band img,
+  .home-page .testimonial-slide {
+    transition: none;
+  }
+}

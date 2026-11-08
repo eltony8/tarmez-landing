@@ -83,9 +83,15 @@
           <p><span data-i18n="hero.scan">امسح الكود</span> <b>5</b></p>
         </div>
         <div class="device device-phone hero-phone">
-          <video src="assets/video/hero-menu.mp4" poster="assets/poster/hero-menu.jpg" muted loop playsinline preload="metadata" data-autoplay aria-label="المنيو الحقيقي على الجوال"></video>
+          <div class="screen" id="demoScreen">
+            <iframe id="demoFrame" title="تجربة الطلب من ترميز" data-i18n-attr="title:hero.frameTitle" loading="lazy" tabindex="-1"></iframe>
+          </div>
         </div>
-        <button class="replay" type="button" id="replay" data-i18n="hero.replay">أعد المشهد</button>
+        <div class="try">
+          <p data-i18n="hero.try">جرّبه بنفسك: اختر طبقًا واطلب من الجوال</p>
+          <a id="demoFull" href="demo/index.html?t=demo" target="_blank" rel="noopener" data-i18n="hero.full">افتح التجربة في صفحة كاملة</a>
+          <button class="replay" type="button" id="replay" data-i18n="hero.replay">أعد المشهد</button>
+        </div>
       </div>
     </div>
   </section>

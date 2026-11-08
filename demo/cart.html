@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="_demo/mock.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Order — Tarmez</title>
+<meta name="description" content="Review your Tarmez order, use your coupons, and place your order for delivery, pickup or dine-in.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#1F1B18">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tarmez">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="js/palette.js?v=6"></script>
+<link rel="stylesheet" href="css/styles.css?v=53">
+<link rel="stylesheet" href="css/i18n.css?v=9">
+<link rel="stylesheet" href="css/cart.css?v=7">
+<link rel="stylesheet" href="css/notifications.css?v=3">
+<script>(function(){try{var t=localStorage.getItem('savoria_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<script>(function(){try{var L=localStorage.getItem('savoria_lang')||'en';if(L!=='ar'&&L!=='en'){L='en';}document.documentElement.setAttribute('lang',L);document.documentElement.setAttribute('dir',L==='ar'?'rtl':'ltr');if(L==='ar'){var l=document.createElement('link');l.id='savoria-arabic-font';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Alexandria:wght@300;400;500;600;700&display=swap';document.head.appendChild(l);}}catch(e){}})();</script>
+</head>
+<body class="cart-page">
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar navbar-solid" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg?v=11" alt="Tarmez" data-content-img="logo"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
+      <a href="index.html#menu" data-i18n="nav.menu">Menu</a>
+      <a href="index.html#reservation" data-i18n="nav.reservations">Reservations</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+      <div class="mobile-nav-auth" id="mobileNavAuth">
+        <a href="login.html" class="btn btn-primary btn-block btn-sm" id="mobileNavLoginLink" data-i18n="nav.logIn">Log In</a>
+      </div>
+    </nav>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-i18n-attr="aria-label:nav.toggleDarkMode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <!-- The language control is inserted right here by js/lang-switcher.js -->
+
+      <a href="cart.html" class="cart-trigger" id="cartTrigger" aria-current="page" aria-label="Open cart" data-i18n-attr="aria-label:nav.openCart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+
+      <a href="login.html" class="nav-login-btn" id="navLoginLink">
+        <svg class="nav-login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        <span class="nav-login-label" data-i18n="nav.logIn">Log In</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" data-i18n-attr="aria-label:nav.toggleMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="cart-main">
+  <!-- ================= CART HERO ================= -->
+  <section class="cart-hero">
+    <div class="container">
+      <nav class="cart-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <span aria-hidden="true">/</span>
+        <span data-i18n="cart.title">Your Order</span>
+      </nav>
+
+      <div class="cart-hero-inner">
+        <div class="cart-hero-copy">
+          <span class="cart-eyebrow" data-i18n="cart.pageEyebrow">Checkout</span>
+          <h1 data-i18n="cart.pageTitle">Your order</h1>
+          <p data-i18n="cart.pageSubtitle">Review your dishes, use your coupons and place your order. Everything is prepared fresh once you confirm.</p>
+          <div class="cart-hero-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span data-i18n="cart.secureCheckout">Secure checkout</span>
+          </div>
+          <div class="cart-hero-chip cart-table-chip" id="cartTableChip" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18M5 6h14l1 4H4l1-4Z"/><path d="M6 10v9M18 10v9M3 19h18"/></svg>
+            <span id="cartTableChipText"></span>
+          </div>
+        </div>
+
+        <div class="cart-hero-art" aria-hidden="true">
+          <span class="cart-hero-ring"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container cart-container">
+    <form id="checkoutForm" autocomplete="off">
+      <div id="checkoutStatus" class="auth-alert cart-page-alert"></div>
+
+      <div class="cart-layout" id="cartLayout">
+        <!-- ================= ITEMS + DETAILS ================= -->
+        <div class="cart-main-col">
+          <section class="cart-card cart-items-card">
+            <div class="cart-card-head">
+              <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span data-i18n="cart.itemsTitle">Your dishes</span>
+                <span class="cart-count-chip" id="cartItemsCount">0</span>
+              </h2>
+              <a href="index.html#menu" class="cart-add-more" aria-label="Add more dishes" title="Add more dishes" data-i18n-attr="aria-label:cart.addMore;title:cart.addMore">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                <span data-i18n="cart.addMore">Add more dishes</span>
+              </a>
+            </div>
+
+            <div class="cart-items" id="cartBody">
+              <div class="cart-empty-state">
+                <span class="cart-empty-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </span>
+                <h3 data-i18n="cart.emptyTitle">Your cart is waiting</h3>
+                <p data-i18n="cart.emptyHint">Browse the menu to add something delicious.</p>
+                <div class="cart-empty-actions">
+                  <a href="index.html#menu" class="btn btn-primary" data-i18n="cart.newOrder">Start a new order</a>
+                  <a href="track-order.html" class="cart-empty-track">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span data-i18n="cart.trackOrder">Your order</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="cart-estimate" id="cartEstimate" style="display:none;"></div>
+          </section>
+
+          <!-- Sign-in gate: the order is tied to an account, so the contact
+               form and the place-order action only appear after login.
+               Existing cart and table stay exactly as they were. -->
+          <section class="cart-card cart-auth-gate" id="cartAuthGate" style="display:none;">
+            <span class="cart-gate-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <h2 data-i18n="checkout.authGateTitle">Sign in to place your order</h2>
+            <p data-i18n="checkout.authGateDesc">Your order, coupons and table are kept on your account. Sign in or create an account to continue — nothing in your cart is lost.</p>
+            <div class="cart-gate-actions">
+              <a class="btn btn-primary" id="gateLoginBtn" href="login.html?next=cart.html" data-i18n="checkout.signIn">Log in</a>
+              <a class="btn btn-outline" id="gateRegisterBtn" href="register.html?next=cart.html" data-i18n="checkout.createAccount">Create an account</a>
+            </div>
+            <p class="cart-gate-note" data-i18n="checkout.authGateNote">You will come right back to this order, with your table still linked.</p>
+          </section>
+
+          <section class="cart-card cart-details-card" id="cartDetailsCard">
+            <div class="cart-card-head">
+              <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+                <span data-i18n="cart.detailsTitle">Delivery details</span>
+              </h2>
+            </div>
+
+            <div class="cart-form-grid">
+              <div class="form-group">
+                <label for="checkoutName" data-i18n="checkout.fullName">Full Name</label>
+                <input type="text" id="checkoutName" required autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label for="checkoutPhone" data-i18n="checkout.phone">Phone</label>
+                <input type="tel" id="checkoutPhone" required autocomplete="off" dir="ltr">
+              </div>
+
+              <div class="form-group is-full">
+                <label for="checkoutOrderType" data-i18n="checkout.orderType">Order Type</label>
+                <select id="checkoutOrderType" required>
+                  <option value="delivery" data-i18n="checkout.delivery">Delivery</option>
+                  <option value="pickup" data-i18n="checkout.pickup">Pickup</option>
+                  <option value="dine_in" data-i18n="checkout.dineIn">Dine-in</option>
+                </select>
+              </div>
+
+              <div class="form-group is-full" id="checkoutAddressGroup">
+                <label for="checkoutAddress" data-i18n="checkout.deliveryAddress">Delivery Address</label>
+                <input type="text" id="checkoutAddress" placeholder="House / street / area" data-i18n-attr="placeholder:checkout.deliveryAddressPlaceholder">
+              </div>
+
+              <div class="form-group is-full" id="checkoutTableGroup" style="display:none;">
+                <label for="checkoutTable" data-i18n="checkout.tableNumber">Table Number</label>
+                <input type="number" id="checkoutTable" min="1" placeholder="e.g. 5" data-i18n-attr="placeholder:checkout.tableNumberPlaceholder">
+              </div>
+
+              <!-- Shown instead of the table field when the guest scanned a
+                   table's QR code: the table is fixed and cannot be edited. -->
+              <div class="form-group is-full" id="tableLockedGroup" style="display:none;">
+                <label data-i18n="table.eyebrow">Table ordering</label>
+                <div class="table-locked-box">
+                  <div class="table-locked-main">
+                    <span class="table-locked-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M5 6h14l1 4H4l1-4Z"/><path d="M6 10v9M18 10v9M3 19h18"/></svg>
+                    </span>
+                    <div>
+                      <strong id="tableLockedNumber"></strong>
+                      <span class="table-locked-note" data-i18n="table.lockedNote"></span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-outline btn-sm" id="tableUnlinkBtn" data-i18n="table.unlink">Order without linking a table</button>
+                </div>
+              </div>
+
+              <div class="form-group is-full">
+                <label for="checkoutNotes"><span data-i18n="checkout.orderNotes">Order Notes</span> <span class="cart-optional">(<span data-i18n="common.optional">optional</span>)</span></label>
+                <textarea id="checkoutNotes" placeholder="Allergies, spice preference, extra sauce, no onions..." data-i18n-attr="placeholder:checkout.orderNotesPlaceholder"></textarea>
+              </div>
+
+              <p class="cart-form-note is-full">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
+                <span data-i18n="checkout.phoneNote">Saved with your order for contact and records — also used to find the coupons issued to this number.</span>
+              </p>
+            </div>
+          </section>
+
+          <!-- ================= REWARDS & COUPONS ================= -->
+          <section class="cart-card cart-rewards-card" style="display:none;">
+            <div class="cart-card-head">
+              <h2>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+                <span data-i18n="rewards.title">Coupons</span>
+              </h2>
+              <span class="rewards-badge" id="rewardsBadge" style="display:none;">0</span>
+            </div>
+
+            <!-- What this invoice earns -->
+            <div id="cartEarnCouponBox" class="cart-points-box" style="display:none;">
+              <div class="cart-points-head">
+                <div class="cart-points-meta">
+                  <div class="cart-points-icon-wrap" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+                  </div>
+                  <div class="cart-points-title-group">
+                    <span class="cart-points-label" data-i18n="cart.earnPointsTitle">Points you earn from this order</span>
+                    <div class="cart-points-value-row">
+                      <strong id="cartEarnCouponValue" class="cart-points-count">SAR 0</strong>
+                    </div>
+                  </div>
+                </div>
+                <span class="cart-points-auto" data-i18n="cart.automatic">automatic</span>
+              </div>
+              <div id="cartEarnCouponMsg" class="cart-points-msg"></div>
+            </div>
+
+            <!-- Rewards & Coupons Body (Panel) -->
+            <div class="rewards-panel-card" id="rewardsPanel" style="display:none;">
+              <!-- 1. Available coupons on the signed-in account -->
+              <div id="rewardsAvailableCouponsWrap" class="cart-rewards-section" style="display:none;">
+                <div class="cart-rewards-sublabel" data-i18n="rewards.availableCouponsTitle">Your available coupons:</div>
+                <div class="rewards-coupons" id="rewardsCoupons"></div>
+              </div>
+
+              <!-- 2. Loyalty points: use them on this bill -->
+              <div id="pointsUseWrap" class="cart-rewards-section cart-points-use" style="display:none;">
+                <div class="rewards-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <label for="pointsUseInput" class="rewards-note cart-rewards-label" data-i18n="points.cartTitle">Use your points</label>
+                </div>
+                <p class="rewards-note" id="pointsBalanceNote"></p>
+                <div class="cart-inline-form" id="pointsUseForm">
+                  <input type="number" id="pointsUseInput" class="cart-input" min="0" step="1" inputmode="numeric" dir="ltr">
+                  <button type="button" class="btn btn-outline" id="pointsUseMaxBtn" data-i18n="points.useMost">Use the most</button>
+                  <button type="button" class="btn btn-primary" id="pointsUseBtn" data-i18n="points.use">Use</button>
+                </div>
+                <div id="pointsAppliedList" class="cart-applied-list"></div>
+              </div>
+
+              <!-- 3. Coupon code input -->
+              <div class="rewards-coupon-input-wrap">
+                <div class="rewards-section-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  <label for="couponCodeInput" class="rewards-note cart-rewards-label" data-i18n="rewards.couponDiscount">Discount coupon code</label>
+                </div>
+                <div class="cart-inline-form coupon-inline-form">
+                  <div class="cart-input-prefix-wrap">
+                    <svg class="cart-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <input type="text" id="couponCodeInput" class="cart-input" placeholder="Enter coupon code (e.g. WELCOME10)" data-i18n-attr="placeholder:rewards.couponInputPlaceholder">
+                  </div>
+                  <button type="button" class="btn btn-primary" id="applyCouponBtn" data-i18n="rewards.applyCoupon">Apply</button>
+                </div>
+                <div class="rewards-msg" id="rewardsMsg" style="display:none;"></div>
+                <div id="appliedCouponsStack" style="display:none;" class="cart-applied-coupons">
+                  <div class="cart-rewards-sublabel" data-i18n="rewards.appliedCouponsTitle">Applied coupons:</div>
+                  <div id="appliedCouponsList" class="cart-applied-list"></div>
+                </div>
+              </div>
+
+              <!-- 3. Legacy phone lookup. Kept in the markup but hidden:
+                   a signed-in wallet follows the account, never a typed
+                   phone number, and guests are stopped at the sign-in gate. -->
+              <div class="rewards-phone-bar" id="rewardsPhoneBar" style="display:none;">
+                <div id="rewardsPhoneUnlinked" class="rewards-unlinked-box">
+                  <div class="rewards-section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"/><path d="M12 18h.01"/></svg>
+                    <label for="rewardsPhoneInput" class="rewards-note cart-rewards-label" data-i18n="rewards.phonePrompt">Enter your phone to see your coupons:</label>
+                  </div>
+                  <div class="cart-inline-form phone-inline-form">
+                    <div class="cart-input-prefix-wrap">
+                      <svg class="cart-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      <input type="tel" id="rewardsPhoneInput" class="cart-input" placeholder="05xxxxxxxx" dir="ltr">
+                    </div>
+                    <button type="button" class="btn btn-outline" id="rewardsPhoneCheckBtn" data-i18n="rewards.checkPhone">Check</button>
+                  </div>
+                  <div class="mgmt-note cart-rewards-tip">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
+                    <span data-i18n="rewards.guestTip">No login required — your phone number is enough to see and use your coupons.</span>
+                  </div>
+                </div>
+
+                <div id="rewardsPhoneLinked" class="rewards-linked-box" style="display:none;">
+                  <div class="rewards-head">
+                    <div class="rewards-user-info">
+                      <div class="rewards-user-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      </div>
+                      <div>
+                        <div class="rewards-user-phone">
+                          <span id="rewardsPhoneDisplay"></span>
+                          <span class="rewards-verified-chip" title="Linked" aria-label="Linked">✓</span>
+                        </div>
+                        <p class="rewards-note" id="rewardsNote"></p>
+                      </div>
+                    </div>
+                    <button type="button" class="rewards-logout" id="rewardsLogout" data-i18n="rewards.logout">Change phone</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ================= SUMMARY ================= -->
+        <aside class="cart-summary-col">
+          <div class="cart-summary-card">
+            <div class="cart-summary-head">
+              <h2 data-i18n="cart.summaryTitle">Order summary</h2>
+              <span class="cart-secure">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span data-i18n="cart.secureCheckout">Secure checkout</span>
+              </span>
+            </div>
+
+            <div class="cart-summary-rows">
+              <div class="cart-table-context" id="cartTableContext" style="display:none;">
+                <span class="cart-table-context-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M5 6h14l1 4H4l1-4Z"/><path d="M6 10v9M18 10v9M3 19h18"/></svg>
+                </span>
+                <span>
+                  <strong id="cartTableContextNumber"></strong>
+                  <small data-i18n="table.lockedHint">Dine-in order — served at this table.</small>
+                </span>
+              </div>
+              <div class="cart-total-row" id="cartSubtotalRow" style="display:none;"><span data-i18n="cart.subtotal">Subtotal</span><span id="cartSubtotal">SAR 0</span></div>
+              <div class="cart-total-row cart-discount-row" id="cartCouponRow" style="display:none;"><span><span data-i18n="rewards.couponDiscount">Coupons</span> (<span id="cartCouponCount">0</span>)</span><span id="cartCouponDiscount">− SAR 0</span></div>
+              <div class="cart-total-row cart-discount-row" id="cartPromoRow" style="display:none;"><span><span data-i18n="cart.promoDiscount">Coupon</span> <span id="cartPromoCode" dir="ltr"></span></span><span id="cartPromoDiscount">− SAR 0</span></div>
+              <div class="cart-total-row cart-discount-row" id="cartPointsRow" style="display:none;"><span><span data-i18n="cart.pointsDiscount">Points</span> (<span id="cartPointsUsed">0</span>)</span><span id="cartPointsDiscount">− SAR 0</span></div>
+              <div class="cart-total-row" id="cartVatRow" style="display:none;"><span id="cartVatLabel" data-i18n="cart.vat">VAT</span><span id="cartVatAmount">+ SAR 0</span></div>
+            </div>
+
+            <div class="cart-summary-total">
+              <span data-i18n="cart.total">Total</span>
+              <strong id="cartTotal">SAR 0</strong>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block cart-place-order" id="placeOrderBtn" data-i18n="checkout.placeOrder">Place Order</button>
+
+            <a class="whatsapp-order-btn" id="whatsappOrderBtn" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.83 13.28L3 21l3.85-1.2a8.9 8.9 0 0 0 5.2 1.66h.01A8.94 8.94 0 0 0 21 12.5a8.87 8.87 0 0 0-3.4-6.18Zm-5.55 13.7a7.4 7.4 0 0 1-3.78-1.03l-.27-.16-2.28.71.72-2.22-.17-.28a7.42 7.42 0 1 1 13.8-3.83 7.44 7.44 0 0 1-7.02 6.8Zm4.06-5.56c-.22-.11-1.3-.64-1.5-.72-.2-.07-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05a6.1 6.1 0 0 1-1.79-1.1 6.7 6.7 0 0 1-1.24-1.55c-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.08-.15.04-.28-.02-.4-.06-.11-.5-1.2-.68-1.65-.18-.43-.36-.37-.5-.38h-.43a.82.82 0 0 0-.6.28c-.2.22-.79.77-.79 1.87s.81 2.17.92 2.32c.11.15 1.6 2.44 3.87 3.42.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.3-.53 1.49-1.04.18-.51.18-.94.13-1.03-.06-.1-.2-.16-.42-.27Z"/></svg>
+              <span data-i18n="cart.whatsapp">Order via WhatsApp instead</span>
+            </a>
+
+            <p class="cart-summary-note" data-i18n="cart.summaryNote">Freshly prepared after you confirm. You will receive a tracking link once your order is placed.</p>
+          </div>
+        </aside>
+      </div>
+    </form>
+  </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.svg?v=11" alt="Tarmez" data-content-img="logo">
+        <p data-content="footer_about">A modern fine-dining kitchen serving Riyadh since 2019 — dine in, pick up, or have it delivered.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram" data-content-attr="href" data-content="social_instagram">IG</a>
+          <a href="#" aria-label="Facebook" data-content-attr="href" data-content="social_facebook">FB</a>
+          <a href="#" aria-label="TikTok" data-content-attr="href" data-content="social_tiktok">TT</a>
+        </div>
+      </div>
+      <div>
+        <h4 data-content="footer_explore_title">Explore</h4>
+        <ul>
+          <li><a href="index.html#about" data-i18n="footer.exploreAbout">About</a></li>
+          <li><a href="index.html#menu" data-i18n="footer.exploreOrder">Order Online</a></li>
+          <li><a href="index.html#reservation" data-i18n="footer.exploreReservations">Reservations</a></li>
+          <li><a href="index.html#reviews" data-i18n="footer.exploreReviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-content="footer_account_title">Account</h4>
+        <ul>
+          <li><a href="track-order.html" data-i18n="footer.trackOrder">Track an Order or Reservation</a></li>
+          <li><a href="login.html" data-i18n="footer.staffLogin">Staff Log In</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-content="footer_support_title">Support</h4>
+        <ul>
+          <li><a href="track-order.html" data-i18n="footer.trackOrder">Track an Order or Reservation</a></li>
+          <li><a href="index.html#contact" data-i18n="footer.contactUs">Contact Us</a></li>
+          <li><a href="privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="footer.termsOfService">Terms of Service</a></li>
+          <li><a href="cookies.html" data-i18n="footer.cookiePolicy">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> <span data-content="restaurant_name">Tarmez</span>. <span data-i18n="footer.rights">All rights reserved.</span></span>
+      <span><a href="privacy.html" data-i18n="footer.privacy">Privacy</a><a href="terms.html" data-i18n="footer.terms">Terms</a><a href="cookies.html" data-i18n="footer.cookies">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top" data-i18n-attr="aria-label:footer.scrollTop">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="js/theme.js?v=11"></script>
+<script src="js/locales/en.js?v=40"></script>
+<script src="js/locales/ar.js?v=40"></script>
+<script src="js/i18n.js?v=8"></script>
+<script src="js/lang-switcher.js?v=3"></script>
+<script src="js/api.js?v=30"></script>
+<script src="js/features.js?v=1"></script>
+<script src="js/app.js?v=46"></script>
+<script src="js/notifications.js?v=7"></script>
+<script src="js/content.js?v=6"></script>
+<script src="js/pwa.js?v=8"></script>
+</body>
+</html>

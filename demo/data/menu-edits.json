@@ -1,0 +1,112 @@
+{
+  "_note": "Edits applied to the recorded menu for the public demo (tools/curate-demo-data.mjs). The site code is untouched; only this demo data changes. Prices in SAR.",
+  "remove": [
+    25,
+    28
+  ],
+  "dishes": {
+    "1": {
+      "price": 38
+    },
+    "2": {
+      "price": 42
+    },
+    "3": {
+      "price": 34
+    },
+    "4": {
+      "price": 98,
+      "description": "Slow-braised for hours in a rich lamb jus, saffron mash, roasted root vegetables.",
+      "description_ar": "مطهو ببطء لساعات في مرق اللحم، مع بطاطس مهروسة بالزعفران وخضار جذرية مشوية."
+    },
+    "5": {
+      "price": 89
+    },
+    "6": {
+      "price": 64
+    },
+    "7": {
+      "price": 32
+    },
+    "8": {
+      "price": 29,
+      "options": [
+        {
+          "id": 9081,
+          "name": "Regular",
+          "name_ar": "عادي",
+          "price": 29,
+          "calories": 380
+        },
+        {
+          "id": 9082,
+          "name": "To share",
+          "name_ar": "للمشاركة",
+          "price": 49,
+          "calories": 760
+        }
+      ]
+    },
+    "9": {
+      "price": 19
+    },
+    "10": {
+      "price": 22
+    },
+    "11": {
+      "price": 36
+    },
+    "12": {
+      "price": 49,
+      "has_spicy_option": true,
+      "options": [
+        {
+          "id": 9121,
+          "name": "Small",
+          "name_ar": "صغير",
+          "price": 49,
+          "calories": 420
+        },
+        {
+          "id": 9122,
+          "name": "Medium",
+          "name_ar": "وسط",
+          "price": 69,
+          "calories": 610
+        },
+        {
+          "id": 9123,
+          "name": "Large",
+          "name_ar": "كبير",
+          "price": 89,
+          "calories": 860
+        }
+      ]
+    },
+    "31": {
+      "price": 79,
+      "has_spicy_option": true
+    }
+  },
+  "optionPrices": {
+    "31": {
+      "Small": 79,
+      "Large": 129
+    }
+  },
+  "table": {
+    "id": 5,
+    "table_number": 5,
+    "label": "Family section",
+    "label_ar": "قسم العائلات"
+  },
+  "forbiddenWords": [
+    "wine",
+    "beer",
+    "alcohol",
+    "نبيذ",
+    "بيرة",
+    "كحول"
+  ],
+  "vatRate": 15
+}

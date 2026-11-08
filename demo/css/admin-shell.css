@@ -1,0 +1,164 @@
+/* =========================================================
+   Tarmez — Site Management layout (js/admin-shell.js)
+   Side menu in groups · drawer on phones · Platform pages
+   ========================================================= */
+
+.admin-shell { display: grid; grid-template-columns: 252px minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 8px; }
+.admin-side {
+  position: sticky; top: 84px; max-height: calc(100vh - 100px); overflow-y: auto; scrollbar-width: thin;
+  background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 14px 10px 12px;
+  box-shadow: 0 18px 40px -32px rgba(var(--charcoal-rgb), .45);
+}
+.admin-side-head { display: flex; gap: 6px; align-items: center; padding: 0 4px 10px; }
+.admin-search {
+  flex: 1; min-width: 0; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--bg-page); color: var(--text-primary); font: inherit; font-size: .85rem;
+}
+.admin-side-close { display: none; border: 0; background: none; font-size: 1.6rem; line-height: 1; color: var(--text-muted); cursor: pointer; }
+.admin-side-group + .admin-side-group { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-color); }
+.admin-side-title {
+  margin: 0 8px 6px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+}
+[lang="ar"] .admin-side-title { letter-spacing: 0; font-size: .78rem; }
+
+/* tab buttons become menu rows inside the side menu */
+.admin-side .tab-btn {
+  width: 100%; flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px;
+  padding: 8px 10px; margin: 1px 0; border-radius: 12px; border: 1px solid transparent;
+  background: transparent; box-shadow: none; text-align: start; font-size: .88rem; font-weight: 500;
+  color: var(--text-primary); text-decoration: none; transform: none;
+}
+.admin-side .tab-btn .tab-icon { width: 30px; height: 30px; padding: 6px; border-radius: 9px; }
+.admin-side .tab-btn:hover { transform: none; background: var(--bg-surface-alt); border-color: transparent; box-shadow: none; color: var(--tab-accent); }
+.admin-side .tab-btn:hover .tab-icon { transform: none; }
+.admin-side .tab-btn.active { transform: none; box-shadow: 0 10px 24px -16px var(--tab-accent); }
+.admin-side .tab-btn span:not(.admin-view-badge):not(.admin-side-ext) { flex: 1; }
+.admin-view-badge { font-size: .8rem; opacity: .7; }
+.admin-side-ext { opacity: .5; font-size: .8rem; }
+.admin-side-site { display: block; margin: 12px 8px 0; font-size: .82rem; color: var(--text-muted); text-decoration: none; }
+.admin-side-site:hover { color: var(--color-terracotta); }
+
+.admin-main { min-width: 0; }
+.admin-topbar {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px; min-height: 40px;
+}
+.admin-page-title { font-family: var(--font-display); font-size: 1.35rem; }
+.admin-menu-btn {
+  display: none; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 12px; cursor: pointer; font: inherit; font-weight: 600;
+  border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary);
+}
+.admin-readonly-pill { padding: 3px 10px; border-radius: 999px; font-size: .75rem; font-weight: 600; background: rgba(var(--gold-rgb), .16); color: var(--gold-deep); }
+.admin-scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); z-index: 1190; }
+
+/* the big hero gets quieter: the menu is the way around now */
+#panelView .admin-hero-banner { padding-block: 18px; margin-bottom: 14px; }
+#panelView .admin-hero-banner .admin-subtitle { display: none; }
+
+@media (max-width: 1000px) {
+  .admin-shell { grid-template-columns: 1fr; }
+  .admin-side {
+    position: fixed; top: 0; bottom: 0; inset-inline-start: 0; z-index: 1200; width: min(86vw, 320px); max-height: none;
+    border-radius: 0; transform: translateX(-105%); transition: transform .28s cubic-bezier(.2, .8, .2, 1);
+  }
+  [dir="rtl"] .admin-side { transform: translateX(105%); }
+  .admin-side.is-open { transform: none; }
+  .admin-side-close { display: block; }
+  .admin-menu-btn { display: inline-flex; }
+  .admin-topbar { position: sticky; top: 66px; z-index: 20; background: var(--bg-page); padding: 8px 0; }
+}
+
+/* ---------- Platform switches ---------- */
+.plat-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.plat-group { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 14px; }
+.plat-group h4 { margin: 0 0 8px; font-size: .95rem; }
+.plat-switch {
+  display: grid; grid-template-columns: 34px 1fr auto auto; gap: 10px; align-items: center; padding: 10px 6px;
+  border-top: 1px dashed var(--border-color); cursor: pointer;
+}
+.plat-group h4 + .plat-switch { border-top: 0; }
+.plat-icon { font-size: 1.3rem; text-align: center; }
+.plat-text { display: flex; flex-direction: column; gap: 2px; }
+.plat-text small { color: var(--text-muted); font-size: .78rem; line-height: 1.45; }
+.plat-state { font-size: .75rem; font-weight: 700; color: var(--color-error); }
+.plat-switch.is-on .plat-state { color: var(--color-success); }
+.plat-switch.is-master { background: rgba(var(--accent-rgb), .05); border-radius: 12px; }
+.plat-switch:not(.is-on) .plat-text strong { opacity: .7; }
+
+/* ---------- Permissions ---------- */
+.perm-table td { vertical-align: middle; }
+.perm-hint { display: block; color: var(--text-muted); font-size: .75rem; font-weight: 400; margin-top: 2px; }
+.perm-seg { display: inline-flex; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+.perm-seg button { border: 0; background: var(--bg-page); color: var(--text-secondary); padding: 6px 12px; font: inherit; font-size: .8rem; cursor: pointer; }
+.perm-seg button + button { border-inline-start: 1px solid var(--border-color); }
+.perm-seg button.is-on.perm-none { background: rgba(179, 38, 30, .1); color: var(--color-error); font-weight: 700; }
+.perm-seg button.is-on.perm-view { background: rgba(var(--gold-rgb), .18); color: var(--gold-deep); font-weight: 700; }
+.perm-seg button.is-on.perm-edit { background: rgba(62, 107, 79, .14); color: var(--color-success); font-weight: 700; }
+.perm-seg button:disabled { cursor: default; }
+.perm-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px; flex-wrap: wrap; }
+#permSave.is-dirty { box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .45); }
+
+/* ---------- Activity log ---------- */
+.act-list { display: flex; flex-direction: column; gap: 6px; }
+.act-row {
+  display: grid; grid-template-columns: 170px 160px 1fr; gap: 10px; align-items: center; padding: 9px 12px;
+  border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-surface); font-size: .84rem;
+}
+.act-when { color: var(--text-muted); font-size: .78rem; }
+.act-who { font-weight: 600; }
+.act-what code { font-size: .8rem; background: var(--bg-surface-alt); padding: 1px 6px; border-radius: 6px; }
+@media (max-width: 640px) {
+  .act-row { grid-template-columns: 1fr; gap: 2px; }
+  .plat-groups { grid-template-columns: 1fr; }
+  .plat-switch { grid-template-columns: 30px 1fr auto; }
+  .plat-state { display: none; }
+  .perm-seg button { padding: 6px 8px; }
+}
+
+/* the current page stands out in the menu */
+.admin-side .tab-btn.active {
+  background: linear-gradient(150deg, var(--tab-accent) 0%, var(--tab-accent-dark) 100%); color: #fff; font-weight: 600;
+}
+.admin-side .tab-btn.active .tab-icon { background: rgba(255, 255, 255, .18); color: #fff; }
+.admin-side .tab-btn.active:hover { color: #fff; }
+/* pages sit right under the top bar (the site's general section padding does not apply here) */
+.admin-main > section[id^="tab-"] { padding: 0 0 24px; margin: 0; min-height: 0; }
+.admin-main > section[id^="tab-"] > .admin-subheading:first-child { margin-top: 0; }
+@media (min-width: 1001px) {
+  .admin-topbar { min-height: 0; margin-bottom: 4px; }
+  .admin-page-title { display: none; }
+}
+
+/* ---------- the shared side menu on other dashboards (js/side-menu.js) ---------- */
+.side-head-title { flex: 1; font-weight: 700; font-family: var(--font-display); padding-inline-start: 6px; }
+.side-rail-btn { border: 0; background: transparent; color: var(--text-secondary); cursor: pointer; padding: 6px; border-radius: 8px; line-height: 0; }
+.side-rail-btn:hover { background: var(--bg-surface-alt); }
+.side-badge { min-width: 22px; padding: 1px 7px; border-radius: 999px; background: var(--color-terracotta); color: #fff; font-size: .72rem; font-weight: 700; text-align: center; }
+.side-shell .admin-side .tab-btn { cursor: pointer; }
+/* collapsible rail (kitchen / order board on wide screens) */
+@media (min-width: 1001px) {
+  .side-shell.is-rail { grid-template-columns: 64px minmax(0, 1fr); }
+  .side-shell.is-rail .admin-side { padding: 10px 6px; }
+  .side-shell.is-rail .side-head-title, .side-shell.is-rail .admin-side-title,
+  .side-shell.is-rail .admin-side .tab-btn span { display: none; }
+  .side-shell.is-rail .admin-side .tab-btn { justify-content: center; padding: 8px 0; }
+  .side-shell.is-rail .admin-side-head { justify-content: center; padding-inline: 0; }
+  .side-shell .side-topbar { display: none; }
+}
+/* staff screens: the dark top bar is shorter than the site navbar */
+.staff-page .side-shell { margin-top: 0; gap: 14px; }
+.staff-page .side-shell .admin-side { top: 70px; max-height: calc(100vh - 84px); }
+.kitchen-page .side-shell .admin-side { background: #1d1916; border-color: #3a312a; }
+.kitchen-page .side-shell .admin-side .tab-btn { color: #F6EFE6; }
+.kitchen-page .side-shell .admin-side .tab-btn:hover { background: rgba(255, 255, 255, .06); }
+.kitchen-page .side-shell .admin-side-title, .kitchen-page .side-head-title { color: rgba(246, 239, 230, .6); }
+.kitchen-page .side-rail-btn { color: #F6EFE6; }
+@media (max-width: 1000px) {
+  .staff-page .side-topbar { top: 56px; background: transparent; }
+  .kitchen-page .side-topbar .admin-menu-btn { background: #221d1a; color: #F6EFE6; border-color: #3a312a; }
+}
+/* customer account */
+.account-container .side-shell { margin-top: 18px; }
+.account-container .side-shell .admin-side { top: 88px; }
+
+/* Order board page (workspace.html inside a frame) */
+.admin-board-frame { display: block; width: 100%; height: calc(100vh - 190px); min-height: 560px; border: 0; border-radius: 16px; background: var(--bg-page); }

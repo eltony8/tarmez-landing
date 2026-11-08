@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="_demo/mock.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — Tarmez</title>
+<meta name="description" content="Your Tarmez account: orders, table reservations, coupons, loyalty points and notifications.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#1F1B18">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tarmez">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="js/palette.js?v=6"></script>
+<link rel="stylesheet" href="css/styles.css?v=53">
+<link rel="stylesheet" href="css/i18n.css?v=9">
+<link rel="stylesheet" href="css/notifications.css?v=3">
+<link rel="stylesheet" href="css/nearby-offers.css?v=1">
+<link rel="stylesheet" href="css/admin-shell.css?v=4">
+<link rel="stylesheet" href="css/account.css?v=9">
+<script>(function(){try{var t=localStorage.getItem('savoria_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<script>(function(){try{var L=localStorage.getItem('savoria_lang')||'en';if(L!=='ar'&&L!=='en'){L='en';}document.documentElement.setAttribute('lang',L);document.documentElement.setAttribute('dir',L==='ar'?'rtl':'ltr');if(L==='ar'){var l=document.createElement('link');l.id='savoria-arabic-font';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Alexandria:wght@300;400;500;600;700&display=swap';document.head.appendChild(l);}}catch(e){}})();</script>
+</head>
+<body class="account-page">
+
+<header class="navbar navbar-solid" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg?v=11" alt="Tarmez" data-content-img="logo"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="index.html#about" data-i18n="nav.about">About</a>
+      <a href="index.html#menu" data-i18n="nav.menu">Menu</a>
+      <a href="index.html#reservation" data-i18n="nav.reservations">Reservations</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+      <div class="mobile-nav-auth" id="mobileNavAuth">
+        <a href="login.html" class="btn btn-primary btn-block btn-sm" id="mobileNavLoginLink" data-i18n="nav.logIn">Log In</a>
+      </div>
+    </nav>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-i18n-attr="aria-label:nav.toggleDarkMode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="cart.html" class="cart-trigger" id="cartTrigger" aria-label="Open cart" data-i18n-attr="aria-label:nav.openCart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <a href="login.html" class="nav-login-btn" id="navLoginLink">
+        <svg class="nav-login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        <span class="nav-login-label" data-i18n="nav.logIn">Log In</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" data-i18n-attr="aria-label:nav.toggleMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="account-main">
+  <section class="account-hero">
+    <div class="container">
+      <span class="account-eyebrow" data-i18n="account.eyebrow">My account</span>
+      <h1 id="accountGreeting">—</h1>
+      <p id="accountSubtitle" data-i18n="account.subtitle">Your orders, coupons and updates — all in one place.</p>
+      <div class="account-hero-actions">
+        <a href="index.html#menu" class="btn btn-primary" data-i18n="account.orderNow">Order now</a>
+        <button type="button" class="btn btn-outline" id="accountLogout" data-i18n="account.logout">Log out</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container account-container">
+    <div id="accountAlert" class="auth-alert"></div>
+
+    <div class="account-stats">
+      <article class="account-stat">
+        <span class="account-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </span>
+        <div><strong id="statOrders">0</strong><span data-i18n="account.statOrders">Orders</span></div>
+      </article>
+      <article class="account-stat">
+        <span class="account-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </span>
+        <div><strong id="statActive">0</strong><span data-i18n="account.statActive">In progress</span></div>
+      </article>
+      <article class="account-stat">
+        <span class="account-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.2l5.9-.9L12 3Z"/></svg>
+        </span>
+        <div><a href="#points" class="account-stat-link"><strong id="statPoints">0</strong><span data-i18n="account.statPoints">Points</span></a></div>
+      </article>
+      <article class="account-stat">
+        <span class="account-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><path d="M7 7h.01"/></svg>
+        </span>
+        <div><strong id="statCoupons">0</strong><span data-i18n="account.statCoupons">Coupons</span></div>
+      </article>
+    </div>
+
+    <section class="account-section" id="orders">
+      <div class="account-section-head">
+        <div>
+          <h2 data-i18n="account.ordersTitle">Orders</h2>
+          <span class="live-mark" id="ordersLive" hidden data-i18n="live.mark">Live — updates by itself</span>
+          <p data-i18n="account.ordersSubtitle">Current orders and everything you ordered before.</p>
+        </div>
+        <a href="track-order.html" class="account-section-link" data-i18n="nav.trackOrder">Track an Order or Reservation</a>
+      </div>
+      <div id="accountOrders" class="account-orders">
+        <div class="account-loading" data-i18n="account.loading">Loading your account...</div>
+      </div>
+    </section>
+
+    <section class="account-section" id="reservations">
+      <div class="account-section-head">
+        <div>
+          <h2 data-i18n="account.reservationsTitle">Table reservations</h2>
+          <p data-i18n="account.reservationsSubtitle">Your table bookings and their live status.</p>
+        </div>
+        <a href="index.html#reservation" class="account-section-link" data-i18n="account.bookTable">Book a table</a>
+      </div>
+      <div id="accountReservations" class="account-orders">
+        <div class="account-loading" data-i18n="account.loading">Loading your account...</div>
+      </div>
+    </section>
+
+    <section class="account-section" id="points">
+      <div class="account-section-head">
+        <div>
+          <h2 data-i18n="points.title">My points</h2>
+          <p data-i18n="points.subtitle">Earn points on every delivered order and use them as a discount.</p>
+        </div>
+      </div>
+      <div id="accountPoints">
+        <div class="account-loading" data-i18n="account.loading">Loading your account...</div>
+      </div>
+    </section>
+
+    <section class="account-section" id="coupons">
+      <div class="account-section-head">
+        <div>
+          <h2 data-i18n="account.couponsTitle">My coupons</h2>
+          <p data-i18n="account.couponsSubtitle">Coupons issued to your account — use them at checkout.</p>
+        </div>
+      </div>
+      <div id="accountCoupons">
+        <div class="account-loading" data-i18n="account.loading">Loading your account...</div>
+      </div>
+    </section>
+
+    <section class="account-section" id="notifications">
+      <div class="account-section-head">
+        <div>
+          <h2 data-i18n="account.notificationsTitle">Notifications</h2>
+          <p data-i18n="account.notificationsSubtitle">Real updates about your orders, coupons and account.</p>
+        </div>
+        <button type="button" class="account-section-btn" id="accountMarkAll" data-i18n="account.markAllRead">Mark all read</button>
+      </div>
+      <div class="push-card install-card" id="installCard" hidden>
+        <div class="push-card-text">
+          <strong data-i18n="pwa.title">Install the Tarmez app</strong>
+          <span data-i18n="pwa.subtitle">Order faster from your home screen.</span>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" id="installAppBtn" data-i18n="pwa.install">Install</button>
+      </div>
+      <div class="push-card" id="pushCard" hidden>
+        <div class="push-card-text">
+          <strong data-i18n="pwa.pushTitle">Notifications on this phone</strong>
+          <span id="pushStatus"></span>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" id="pushToggle"></button>
+      </div>
+      <div id="accountNotifications" class="account-notif-list">
+        <div class="account-loading" data-i18n="account.loading">Loading your account...</div>
+      </div>
+    </section>
+
+    <section class="account-section" id="profile">
+      <div class="account-section-head">
+        <div>
+          <h2 data-i18n="account.profileTitle">Account details</h2>
+          <p data-i18n="account.profileSubtitle">The details attached to your orders and coupons.</p>
+        </div>
+      </div>
+      <div class="account-profile" id="accountProfile"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:0;">
+      <span>&copy; <span id="year"></span> <span data-content="restaurant_name">Tarmez</span>. <span data-i18n="footer.rights">All rights reserved.</span></span>
+      <span><a href="privacy.html" data-i18n="footer.privacy">Privacy</a><a href="terms.html" data-i18n="footer.terms">Terms</a><a href="cookies.html" data-i18n="footer.cookies">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js?v=11"></script>
+<script src="js/locales/en.js?v=40"></script>
+<script src="js/locales/ar.js?v=40"></script>
+<script src="js/i18n.js?v=8"></script>
+<script src="js/lang-switcher.js?v=3"></script>
+<script src="js/api.js?v=30"></script>
+<script src="js/features.js?v=1"></script>
+<script src="js/app.js?v=46"></script>
+<script src="js/notifications.js?v=7"></script>
+<script src="js/side-menu.js?v=2"></script>
+<script src="js/live-refresh.js?v=1"></script>
+<script src="js/account.js?v=18"></script>
+<script src="js/pwa.js?v=8"></script>
+<script src="js/nearby-offers.js?v=2"></script>
+</body>
+</html>

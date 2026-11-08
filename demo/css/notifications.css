@@ -1,0 +1,130 @@
+/* =========================================================
+   Tarmez — Notification centre (navbar bell + panel)
+   Uses the same glass/nav tokens as the theme and cart controls,
+   so the new control never looks bolted on.
+   ========================================================= */
+
+.notif-wrap { position: relative; display: inline-flex; flex-shrink: 0; }
+
+/* Account shortcut — same pill language as the sign-in button, but quiet
+   so the primary account action still reads clearly. */
+.nav-account-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  height: 42px; padding: 0 1rem; border-radius: 999px;
+  border: 1.5px solid rgba(251,246,238,0.28);
+  background: rgba(251,246,238,0.06);
+  color: var(--on-dark-text); font-weight: 600; font-size: 0.84rem; line-height: 1;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.nav-account-btn:hover {
+  background: rgba(251,246,238,0.14);
+  border-color: rgba(var(--gold-rgb),0.75);
+  transform: translateY(-1px);
+}
+.nav-account-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+.nav-account-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+@media (max-width: 960px) {
+  .nav-account-btn { width: 42px; padding: 0; }
+  .nav-account-btn span { display: none; }
+}
+@media (max-width: 720px) {
+  /* The mobile drawer already carries the account actions; the bell and
+     the cart stay one tap away. */
+  .nav-account-btn { display: none; }
+  .notif-trigger { width: 38px; height: 38px; }
+  .notif-trigger svg { width: 17px; height: 17px; }
+}
+
+.notif-trigger {
+  position: relative;
+  width: 42px; height: 42px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(251,246,238,0.28);
+  background: rgba(251,246,238,0.06);
+  color: var(--on-dark-text);
+  flex-shrink: 0; cursor: pointer; padding: 0;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.notif-trigger:hover {
+  background: rgba(251,246,238,0.14);
+  border-color: rgba(var(--gold-rgb),0.75);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+}
+.notif-trigger:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+.notif-trigger svg { width: 19px; height: 19px; }
+
+.notif-badge {
+  position: absolute; top: -4px; inset-inline-end: -4px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px; background: var(--color-error, #B3261E); color: #fff;
+  font-size: 0.66rem; font-weight: 700; line-height: 18px; text-align: center;
+  border: 2px solid var(--color-charcoal, var(--dk-1F1B18));
+}
+
+.notif-panel {
+  position: absolute; top: calc(100% + 12px); inset-inline-end: 0;
+  width: 370px; max-width: min(92vw, 370px);
+  background: var(--bg-surface); color: var(--text-primary);
+  border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg); z-index: 1200; overflow: hidden;
+}
+.notif-panel[hidden] { display: none; }
+
+.notif-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 14px 16px 10px; border-bottom: 1px solid var(--border-color);
+}
+.notif-head h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+.notif-mark-all {
+  border: 0; background: none; color: var(--color-terracotta);
+  font-size: 0.78rem; font-weight: 600; cursor: pointer; padding: 4px 0;
+}
+.notif-mark-all:disabled { opacity: 0.45; cursor: default; }
+
+.notif-list { max-height: min(62vh, 430px); overflow-y: auto; }
+.notif-empty { padding: 28px 18px; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+
+.notif-item {
+  display: flex; gap: 11px; width: 100%; text-align: start;
+  padding: 13px 16px; border: 0; border-bottom: 1px solid var(--border-color);
+  background: transparent; color: inherit; cursor: pointer; font: inherit;
+  transition: background var(--transition);
+}
+.notif-item:last-child { border-bottom: 0; }
+.notif-item:hover { background: var(--bg-surface-alt); }
+.notif-item.is-unread { background: rgba(var(--gold-rgb),0.10); }
+.notif-item.is-unread:hover { background: rgba(var(--gold-rgb),0.16); }
+
+.notif-icon {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-surface-alt); color: var(--color-terracotta);
+}
+.notif-icon svg { width: 17px; height: 17px; }
+
+.notif-body { min-width: 0; flex: 1; }
+.notif-title { display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 2px; }
+.notif-text {
+  display: block; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45;
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.notif-time { display: block; margin-top: 5px; font-size: 0.7rem; color: var(--text-secondary); opacity: 0.8; }
+.notif-dot {
+  flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-terracotta); margin-top: 6px;
+}
+
+.notif-foot {
+  display: block; padding: 11px 16px; text-align: center;
+  font-size: 0.82rem; font-weight: 600; color: var(--color-terracotta);
+  border-top: 1px solid var(--border-color); background: var(--bg-surface);
+}
+
+@media (max-width: 640px) {
+  .notif-panel {
+    position: fixed; top: 66px; inset-inline: 12px; width: auto; max-width: none;
+  }
+}

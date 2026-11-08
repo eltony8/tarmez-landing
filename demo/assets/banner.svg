@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1F1B18"/>
+      <stop offset="100%" stop-color="#33291F"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="15%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#D9A441" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#D9A441" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="88%" cy="82%" r="55%">
+      <stop offset="0%" stop-color="#C4602E" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#C4602E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="400" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1280" height="400" fill="url(#glow1)"/>
+  <rect x="0" y="0" width="1280" height="400" fill="url(#glow2)"/>
+
+  <g opacity="0.5" stroke="#D9A441" stroke-width="1">
+    <line x1="0" y1="399" x2="1280" y2="399"/>
+    <line x1="0" y1="1" x2="1280" y2="1"/>
+  </g>
+
+  <g stroke="#D9A441" stroke-width="0.6" opacity="0.35" fill="none">
+    <circle cx="1120" cy="90" r="70"/>
+    <circle cx="1120" cy="90" r="95"/>
+    <circle cx="150" cy="330" r="55"/>
+  </g>
+
+  <g transform="translate(150,150)" fill="none" stroke="#D9A441" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round">
+    <path d="M0,0 L0,60 M-10,0 L-10,22 Q-10,32 0,32 M10,0 L10,22 Q10,32 0,32"/>
+    <path d="M46,0 Q60,10 60,30 Q60,45 46,50 L46,90" transform="translate(0,0)"/>
+  </g>
+
+  <text x="150" y="205" font-family="Georgia, 'Playfair Display', serif" font-size="88" font-weight="700" fill="#FBF6EE">Tarmez</text>
+
+  <text x="153" y="245" font-family="'Segoe UI', Inter, Helvetica, Arial, sans-serif" font-size="21" letter-spacing="2" fill="#D9A441">FINE DINING &amp; FOOD ORDERING PLATFORM</text>
+
+  <line x1="153" y1="265" x2="530" y2="265" stroke="#D9A441" stroke-width="1.5" opacity="0.7"/>
+
+  <text x="153" y="300" font-family="'Segoe UI', Inter, Helvetica, Arial, sans-serif" font-size="16" fill="#E8DFCF" opacity="0.85">Full-stack restaurant &amp; ordering system — HTML · CSS · JavaScript · Java (Spring Boot) · MySQL</text>
+
+  <g font-family="'Segoe UI', Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600">
+    <g transform="translate(153,330)">
+      <rect width="68" height="30" rx="15" fill="none" stroke="#D9A441" stroke-width="1"/>
+      <text x="34" y="20" text-anchor="middle" fill="#F3C878">HTML5</text>
+    </g>
+    <g transform="translate(233,330)">
+      <rect width="60" height="30" rx="15" fill="none" stroke="#D9A441" stroke-width="1"/>
+      <text x="30" y="20" text-anchor="middle" fill="#F3C878">CSS3</text>
+    </g>
+    <g transform="translate(305,330)">
+      <rect width="140" height="30" rx="15" fill="none" stroke="#D9A441" stroke-width="1"/>
+      <text x="70" y="20" text-anchor="middle" fill="#F3C878">JavaScript (ES6+)</text>
+    </g>
+    <g transform="translate(457,330)">
+      <rect width="56" height="30" rx="15" fill="none" stroke="#D9A441" stroke-width="1"/>
+      <text x="28" y="20" text-anchor="middle" fill="#F3C878">Java</text>
+    </g>
+    <g transform="translate(525,330)">
+      <rect width="80" height="30" rx="15" fill="none" stroke="#D9A441" stroke-width="1"/>
+      <text x="40" y="20" text-anchor="middle" fill="#F3C878">MySQL</text>
+    </g>
+    <g transform="translate(617,330)">
+      <rect width="70" height="30" rx="15" fill="#D9A441"/>
+      <text x="35" y="20" text-anchor="middle" fill="#3C2A10">JWT Auth</text>
+    </g>
+  </g>
+
+  <g transform="translate(980,150)" opacity="0.9">
+    <circle cx="0" cy="0" r="72" fill="none" stroke="#D9A441" stroke-width="2"/>
+    <circle cx="0" cy="0" r="60" fill="none" stroke="#D9A441" stroke-width="1" opacity="0.6"/>
+    <g fill="none" stroke="#D9A441" stroke-width="2.5" stroke-linecap="round">
+      <path d="M-28,-8 L28,-8"/>
+      <path d="M-28,8 L28,8"/>
+      <path d="M-20,-8 L-28,-24 M20,-8 L28,-24"/>
+      <path d="M-20,8 L-28,24 M20,8 L28,24"/>
+    </g>
+  </g>
+</svg>

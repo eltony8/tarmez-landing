@@ -1,0 +1,216 @@
+/* =========================================================
+   Tarmez — home page motion
+   css/motion.css  (paired with js/motion.js)
+
+   1. Hero entrance, step by step
+   2. Counting stats (js)
+   3. Steam over the dish, depth that follows the pointer, gentle float on touch
+   4. Menu cards tilt towards the pointer with a light sheen
+   5. A dish flies into the cart (js)
+   6. Sections arrive in their own way while scrolling
+
+   Everything here is switched on by the "motion" class that the page head
+   adds to <html> only when the visitor has not asked for reduced motion.
+   Without it (or without JavaScript) the page is exactly as before.
+   ========================================================= */
+
+@keyframes motionRise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes motionFocus {
+  from { opacity: 0; filter: blur(12px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+@keyframes motionDraw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes motionUnveil {
+  from { clip-path: inset(12% 10% 12% 10% round 30px); opacity: 0.2; }
+  to   { clip-path: inset(0 0 0 0 round 30px); opacity: 1; }
+}
+@keyframes motionZoomOut {
+  from { transform: scale(1.14); }
+  to   { transform: scale(1); }
+}
+@keyframes motionPop {
+  0%   { opacity: 0; transform: scale(0.6) rotate(-8deg); }
+  70%  { opacity: 1; transform: scale(1.04) rotate(1deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes motionFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -10px; }
+}
+@keyframes motionSteam {
+  0%   { opacity: 0; transform: translateY(10px) scaleY(0.8); }
+  25%  { opacity: 0.75; }
+  100% { opacity: 0; transform: translateY(-46px) scaleY(1.25); }
+}
+
+/* ---------- 1. Hero entrance ---------- */
+html.motion .home-page .hero-eyebrow   { animation: motionRise 0.8s cubic-bezier(.2,.7,.2,1) 0.10s both; }
+html.motion .home-page .hero h1 > *    { animation: motionFocus 0.9s ease-out both; }
+html.motion .home-page .hero h1 > :nth-child(1) { animation-delay: 0.25s; }
+html.motion .home-page .hero h1 > :nth-child(2) { animation-delay: 0.45s; }
+html.motion .home-page .hero h1 > :nth-child(3) { animation-delay: 0.65s; }
+html.motion .home-page .hero h1 em::after {
+  transform-origin: var(--motion-start, left) center;
+  animation: motionDraw 0.9s cubic-bezier(.6,0,.2,1) 1.05s both;
+}
+[dir="rtl"] { --motion-start: right; }
+html.motion .home-page .hero p         { animation: motionRise 0.8s cubic-bezier(.2,.7,.2,1) 0.80s both; }
+html.motion .home-page .hero-actions   { animation: motionRise 0.8s cubic-bezier(.2,.7,.2,1) 0.95s both; }
+html.motion .home-page .hero-stat      { animation: motionRise 0.8s cubic-bezier(.2,.7,.2,1) both; }
+html.motion .home-page .hero-stat:nth-child(1) { animation-delay: 1.10s; }
+html.motion .home-page .hero-stat:nth-child(2) { animation-delay: 1.22s; }
+html.motion .home-page .hero-stat:nth-child(3) { animation-delay: 1.34s; }
+
+html.motion .home-page .hero-visual-frame     { animation: motionUnveil 1.3s cubic-bezier(.7,0,.2,1) 0.20s both; }
+html.motion .home-page .hero-visual-frame img { animation: motionZoomOut 2.2s cubic-bezier(.2,.7,.2,1) 0.20s both; }
+html.motion .home-page .hero-tag-pill         { animation: motionRise 0.7s ease-out 1.05s both; }
+html.motion .home-page .hero-visual-accent    { animation: motionPop 0.9s cubic-bezier(.3,1.4,.5,1) 0.95s both; }
+html.motion .home-page .hero-badge-card       { animation: motionRise 0.8s cubic-bezier(.2,.7,.2,1) 1.25s both; }
+
+/* ---------- 3. Depth that follows the pointer (js sets --mx / --my from -1 to 1) ---------- */
+.home-page .hero-visual-frame,
+.home-page .hero-visual-accent,
+.home-page .hero-badge-card,
+.home-page .hero-content {
+  transition: translate 0.6s cubic-bezier(.2,.7,.2,1);
+}
+html.motion .home-page .hero.has-depth .hero-visual-frame  { translate: calc(var(--mx, 0) * -8px)  calc(var(--my, 0) * -8px); }
+html.motion .home-page .hero.has-depth .hero-visual-accent { translate: calc(var(--mx, 0) * 20px)  calc(var(--my, 0) * 16px); }
+html.motion .home-page .hero.has-depth .hero-badge-card    { translate: calc(var(--mx, 0) * -16px) calc(var(--my, 0) * -12px); }
+html.motion .home-page .hero.has-depth .hero-content       { translate: calc(var(--mx, 0) * 5px)   calc(var(--my, 0) * 4px); }
+
+/* Touch screens: no pointer, so the small dish and the badge float gently instead. */
+@media (hover: none) {
+  html.motion .home-page .hero-badge-card { animation: motionRise 0.8s cubic-bezier(.2,.7,.2,1) 1.25s both, motionFloat 6s ease-in-out 2.2s infinite; }
+  html.motion .home-page .hero-visual-accent { animation: motionPop 0.9s cubic-bezier(.3,1.4,.5,1) 0.95s both, motionFloat 7s ease-in-out 2s infinite; }
+}
+
+/* Steam rising from the plated dish */
+.hero-steam {
+  position: absolute;
+  left: 50%;
+  bottom: 58%;
+  width: 46%;
+  height: 70%;
+  translate: -50% 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+.hero-steam path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: blur(2.5px);
+  opacity: 0;
+  animation: motionSteam 3.6s ease-in infinite;
+}
+.hero-steam path:nth-child(2) { animation-delay: 1.2s; }
+.hero-steam path:nth-child(3) { animation-delay: 2.4s; }
+.home-page .hero-visual-accent { overflow: visible; }
+.home-page .hero-visual-accent img { border-radius: inherit; }
+
+/* ---------- 4. Menu cards tilt + sheen (js sets --rx / --ry / --sx / --sy) ---------- */
+html.motion .home-page .menu-card.is-tilting {
+  transform: perspective(1000px) translateY(-7px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.12s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+html.motion .home-page .menu-card-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--sx, 50%) var(--sy, 0%), rgba(255, 255, 255, 0.38), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  mix-blend-mode: soft-light;
+}
+html.motion .home-page .menu-card.is-tilting .menu-card-media::after { opacity: 1; }
+
+/* Cards arrive one after another (and again after a category filter). */
+html.motion .home-page .menu-card.motion-wait { opacity: 0; transform: translateY(28px) scale(0.97); }
+html.motion .home-page .menu-card.motion-in {
+  transition: opacity 0.7s ease, transform 0.8s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* ---------- 5. The dish that flies into the cart ---------- */
+.motion-fly {
+  position: fixed;
+  z-index: 10000;
+  width: 68px;
+  height: 68px;
+  margin: -34px 0 0 -34px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+  border: 3px solid var(--color-gold, #D9A441);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+}
+.cart-trigger.motion-cart-glow { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.55); animation: motionCartGlow 0.9s ease-out; }
+@keyframes motionCartGlow {
+  from { box-shadow: 0 0 0 0 rgba(var(--gold-rgb), 0.7); }
+  to   { box-shadow: 0 0 0 16px rgba(var(--gold-rgb), 0); }
+}
+
+/* ---------- 6. Sections arrive in their own way ---------- */
+html.motion .home-page .reveal {
+  transition: opacity 0.9s ease, transform 1s cubic-bezier(.2,.7,.2,1), clip-path 1.2s cubic-bezier(.7,0,.2,1);
+}
+/* photos open like a curtain (the box stays measurable; its photos are clipped) */
+html.motion .home-page .reveal.motion-curtain { opacity: 1; transform: none; }
+html.motion .home-page .reveal.motion-curtain > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s cubic-bezier(.7,0,.2,1);
+}
+html.motion .home-page .reveal.motion-curtain > :nth-child(2) { transition-delay: 0.25s; }
+html.motion .home-page .reveal.motion-curtain > :nth-child(3) { transition-delay: 0.45s; }
+html.motion .home-page .reveal.motion-curtain.is-visible > * { clip-path: inset(0 0 0 0); }
+/* text slides in from the reading side */
+html.motion .home-page .reveal.motion-side { transform: translateX(calc(var(--motion-side, -1) * 46px)); }
+[dir="rtl"] .home-page { --motion-side: 1; }
+html.motion .home-page .reveal.motion-side.is-visible { transform: none; }
+/* cards rise with a slight scale */
+html.motion .home-page .reveal.motion-lift { transform: translateY(40px) scale(0.97); }
+html.motion .home-page .reveal.motion-lift.is-visible { transform: none; }
+/* section titles: the heading rises, then a gold line draws under it */
+html.motion .home-page .section-header.reveal h2 { position: relative; }
+html.motion .home-page .section-header.reveal h2::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 2px;
+  margin: 0.7rem auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.9s cubic-bezier(.6,0,.2,1) 0.35s;
+}
+html.motion .home-page .section-header.reveal.is-visible h2::after { transform: scaleX(1); }
+
+/* A thin progress line at the top of the page */
+.motion-progress {
+  position: fixed;
+  inset-inline-start: 0;
+  top: 0;
+  z-index: 2000;
+  height: 3px;
+  width: 100%;
+  transform-origin: var(--motion-start, left) center;
+  transform: scaleX(var(--progress, 0));
+  background: linear-gradient(90deg, var(--color-terracotta), var(--color-gold));
+  pointer-events: none;
+}
+
+/* Anyone who asked for less motion gets the still page. */
+@media (prefers-reduced-motion: reduce) {
+  html.motion .home-page * { animation: none !important; }
+  .hero-steam, .motion-progress, .motion-fly { display: none !important; }
+}
