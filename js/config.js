@@ -5,7 +5,7 @@ window.TARMEZ = {
   qrUrl: '',
 
   // WhatsApp in international form, digits only, e.g. '9665XXXXXXXX'
-  whatsapp: '',
+  whatsapp: '966555304556',
   // where demo requests and the email button go
   email: '',
   // Formspree form id (the part after formspree.io/f/), e.g. 'xayzabcd'. Empty = the form opens WhatsApp or email instead.
@@ -13,7 +13,7 @@ window.TARMEZ = {
 
   currency: { ar: 'ر.س', en: 'SAR' },
   // true shows «prices are indicative» under the plans. Set to false once the prices below are final.
-  pricesAreDraft: true,
+  pricesAreDraft: false,
   // yearly price is per month when paid yearly
   plans: [
     {
