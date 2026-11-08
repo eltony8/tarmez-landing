@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta.title">ترميز — الطلب من الطاولة للمطاعم والمقاهي</title>
+<meta name="description" data-i18n-attr="content:meta.desc" content="ترميز يحوّل كل طاولة إلى نقطة طلب: الضيف يمسح الكود ويطلب من جواله، والطلب يصل فورًا لفريقك والمطبخ.">
+<meta name="theme-color" content="#1F1B18">
+<meta property="og:title" content="ترميز — الطلب من الطاولة">
+<meta property="og:description" content="الضيف يمسح الكود ويطلب من جواله، والطلب يصل فورًا لفريقك والمطبخ.">
+<meta property="og:image" content="assets/og.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=El+Messiri:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM9 8h6M9 12h6M9 16h4"/></symbol>
+  <symbol id="i-options" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM9 5v14M15 5v14"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c3 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-5 1-8z"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 9h16v4H4zM6 13h12v8H6zM12 9v12M12 9c-2-4-6-3-5 0M12 9c2-4 6-3 5 0"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 4 0 5-1 2-3 2-4a9 9 0 0 0-9-8z"/><circle cx="8" cy="10" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16" cy="10" r="1"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7 2h10v20H7zM11 18h2"/></symbol>
+  <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM8 11h8M8 15h8M12 11v8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/><path d="M9 9c0 3 3 6 6 6l1-1.5-2-1-1 1c-1-.5-2-1.5-2.5-2.5l1-1-1-2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+</svg>
+
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+
+<header class="top" id="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#top" aria-label="ترميز">
+      <img src="assets/logo.svg" alt="" width="36" height="36">
+      <span>ترميز</span>
+    </a>
+    <nav class="nav" aria-label="الأقسام">
+      <a href="#roles" data-i18n="nav.roles">كيف يعمل</a>
+      <a href="#features" data-i18n="nav.features">المميزات</a>
+      <a href="#pricing" data-i18n="nav.pricing">الأسعار</a>
+      <a href="#faq" data-i18n="nav.faq">الأسئلة</a>
+    </nav>
+    <div class="top-actions">
+      <button class="lang" type="button" id="langBtn" data-i18n="lang.switch">English</button>
+      <a class="btn btn-solid btn-sm" href="#contact" data-i18n="nav.cta">احجز عرضًا تجريبيًا</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- the one bold moment: the table's code breaks apart into the real menu -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 data-i18n="hero.title">المنيو على الطاولة، والطلب في المطبخ.</h1>
+        <p class="lede" data-i18n="hero.sub">الضيف يمسح الكود ويطلب من جواله، والطلب يظهر فورًا عند فريقك وعلى شاشة المطبخ. بدون تطبيق، وبدون انتظار.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#contact" data-i18n="hero.cta">احجز عرضًا تجريبيًا</a>
+          <a class="btn btn-line" href="#roles" data-i18n="hero.watch">شاهد كيف يعمل</a>
+        </div>
+        <ul class="ticks">
+          <li><svg><use href="#i-check"/></svg><span data-i18n="hero.c1">يعمل من كاميرا أي جوال</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="hero.c2">عربي وإنجليزي</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="hero.c3">فاتورة ضريبية برمز QR</span></li>
+        </ul>
+      </div>
+      <div class="hero-stage" id="heroStage">
+        <div class="tent" aria-hidden="true">
+          <img src="assets/logo.svg" alt="" width="34" height="34">
+          <canvas id="qrCanvas" width="600" height="600"></canvas>
+          <p><span data-i18n="hero.scan">امسح الكود</span> <b>5</b></p>
+        </div>
+        <div class="device device-phone hero-phone">
+          <video src="assets/video/hero-menu.mp4" poster="assets/poster/hero-menu.jpg" muted loop playsinline preload="metadata" data-autoplay aria-label="المنيو الحقيقي على الجوال"></video>
+        </div>
+        <button class="replay" type="button" id="replay" data-i18n="hero.replay">أعد المشهد</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="roles" id="roles">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i18n="roles.title">شاشة لكل واحد في المطعم</h2>
+        <p data-i18n="roles.sub">نفس الطلب يتحرك بين الضيف والفريق والمطبخ لحظة بلحظة. اللي تشوفه هنا تسجيل حقيقي من النظام.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="الشاشات">
+        <button role="tab" aria-selected="true" aria-controls="p-guest" id="t-guest" data-i18n="roles.guest">الضيف</button>
+        <button role="tab" aria-selected="false" aria-controls="p-staff" id="t-staff" tabindex="-1" data-i18n="roles.staff">لوحة الطلبات</button>
+        <button role="tab" aria-selected="false" aria-controls="p-kitchen" id="t-kitchen" tabindex="-1" data-i18n="roles.kitchen">المطبخ</button>
+        <button role="tab" aria-selected="false" aria-controls="p-owner" id="t-owner" tabindex="-1" data-i18n="roles.owner">صاحب المطعم</button>
+      </div>
+      <div class="panel" role="tabpanel" id="p-guest" aria-labelledby="t-guest">
+        <div class="panel-media"><div class="device device-phone"><video data-src="assets/video/guest.mp4" poster="assets/poster/guest.jpg" muted loop playsinline preload="none"></video></div></div>
+        <div class="panel-copy"><h3 data-i18n="roles.guest.t">يطلب من طاولته</h3><ul class="ticks">
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.guest.1"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.guest.2"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.guest.3"></span></li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-staff" aria-labelledby="t-staff" hidden>
+        <div class="panel-media wide"><div class="device device-browser"><i></i><video data-src="assets/video/staff.mp4" poster="assets/poster/staff.jpg" muted loop playsinline preload="none"></video></div></div>
+        <div class="panel-copy"><h3 data-i18n="roles.staff.t"></h3><ul class="ticks">
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.staff.1"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.staff.2"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.staff.3"></span></li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-kitchen" aria-labelledby="t-kitchen" hidden>
+        <div class="panel-media wide"><div class="device device-browser"><i></i><video data-src="assets/video/kitchen.mp4" poster="assets/poster/kitchen.jpg" muted loop playsinline preload="none"></video></div></div>
+        <div class="panel-copy"><h3 data-i18n="roles.kitchen.t"></h3><ul class="ticks">
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.kitchen.1"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.kitchen.2"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.kitchen.3"></span></li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-owner" aria-labelledby="t-owner" hidden>
+        <div class="panel-media wide"><div class="device device-browser"><i></i><video data-src="assets/video/owner.mp4" poster="assets/poster/owner.jpg" muted loop playsinline preload="none"></video></div></div>
+        <div class="panel-copy"><h3 data-i18n="roles.owner.t"></h3><ul class="ticks">
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.owner.1"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.owner.2"></span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="roles.owner.3"></span></li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey" id="journey">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i18n="journey.title">رحلة طلب واحد</h2>
+        <p data-i18n="journey.sub"></p>
+      </div>
+      <ol class="steps">
+        <li><b>1</b><h3 data-i18n="journey.1.t"></h3><p data-i18n="journey.1.d"></p></li>
+        <li><b>2</b><h3 data-i18n="journey.2.t"></h3><p data-i18n="journey.2.d"></p></li>
+        <li><b>3</b><h3 data-i18n="journey.3.t"></h3><p data-i18n="journey.3.d"></p></li>
+        <li><b>4</b><h3 data-i18n="journey.4.t"></h3><p data-i18n="journey.4.d"></p></li>
+        <li><b>5</b><h3 data-i18n="journey.5.t"></h3><p data-i18n="journey.5.d"></p></li>
+        <li><b>6</b><h3 data-i18n="journey.6.t"></h3><p data-i18n="journey.6.d"></p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="features.title">كل اللي يحتاجه مطعمك</h2></div>
+      <div class="feature-cols">
+        <div class="fgroup"><h3 data-i18n="features.g1"></h3><ul>
+          <li><svg><use href="#i-menu"/></svg><span data-i18n="f.menu"></span></li>
+          <li><svg><use href="#i-options"/></svg><span data-i18n="f.options"></span></li>
+          <li><svg><use href="#i-bag"/></svg><span data-i18n="f.types"></span></li>
+          <li><svg><use href="#i-calendar"/></svg><span data-i18n="f.reserve"></span></li>
+          <li><svg><use href="#i-phone"/></svg><span data-i18n="f.app"></span></li></ul></div>
+        <div class="fgroup"><h3 data-i18n="features.g2"></h3><ul>
+          <li><svg><use href="#i-board"/></svg><span data-i18n="f.board"></span></li>
+          <li><svg><use href="#i-flame"/></svg><span data-i18n="f.kitchen"></span></li>
+          <li><svg><use href="#i-receipt"/></svg><span data-i18n="f.invoice"></span></li>
+          <li><svg><use href="#i-key"/></svg><span data-i18n="f.roles"></span></li>
+          <li><svg><use href="#i-sheet"/></svg><span data-i18n="f.excel"></span></li></ul></div>
+        <div class="fgroup"><h3 data-i18n="features.g3"></h3><ul>
+          <li><svg><use href="#i-gift"/></svg><span data-i18n="f.points"></span></li>
+          <li><svg><use href="#i-pin"/></svg><span data-i18n="f.nearby"></span></li>
+          <li><svg><use href="#i-star"/></svg><span data-i18n="f.ratings"></span></li>
+          <li><svg><use href="#i-palette"/></svg><span data-i18n="f.themes"></span></li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="spots">
+    <div class="wrap">
+      <article class="spot">
+        <div class="spot-media"><div class="device device-phone"><video data-src="assets/video/nearby.mp4" poster="assets/poster/nearby.jpg" muted loop playsinline preload="none"></video></div><div class="ring" aria-hidden="true"></div></div>
+        <div class="spot-copy"><svg class="spot-icon"><use href="#i-pin"/></svg><h2 data-i18n="spot.nearby.t"></h2><p data-i18n="spot.nearby.d"></p></div>
+      </article>
+      <article class="spot flip">
+        <div class="spot-media"><div class="device device-phone"><video data-src="assets/video/points.mp4" poster="assets/poster/points.jpg" muted loop playsinline preload="none"></video></div></div>
+        <div class="spot-copy"><svg class="spot-icon"><use href="#i-gift"/></svg><h2 data-i18n="spot.points.t"></h2><p data-i18n="spot.points.d"></p></div>
+      </article>
+      <article class="spot wide">
+        <div class="spot-media"><div class="device device-browser"><i></i><video data-src="assets/video/excel.mp4" poster="assets/poster/excel.jpg" muted loop playsinline preload="none"></video></div></div>
+        <div class="spot-copy"><svg class="spot-icon"><use href="#i-sheet"/></svg><h2 data-i18n="spot.excel.t"></h2><p data-i18n="spot.excel.d"></p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="reels" id="reels">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="reels.title">من حملة ترميز</h2><p data-i18n="reels.sub"></p></div>
+      <div class="reel-row" id="reelRow">
+        <button class="reel" type="button" data-video="assets/video/reel-waiter.mp4"><img src="assets/poster/reel-waiter.jpg" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span></button>
+        <button class="reel" type="button" data-video="assets/video/reel-before-after.mp4"><img src="assets/poster/reel-before-after.jpg" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span></button>
+        <button class="reel" type="button" data-video="assets/video/reel-waiting-counter.mp4"><img src="assets/poster/reel-waiting-counter.jpg" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span></button>
+        <button class="reel" type="button" data-video="assets/video/reel-owner.mp4"><img src="assets/poster/reel-owner.jpg" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span></button>
+        <button class="reel" type="button" data-video="assets/video/reel-nearby.mp4"><img src="assets/poster/reel-nearby.jpg" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="pricing.title">خطة على قد مطعمك</h2><p data-i18n="pricing.sub"></p></div>
+      <div class="period" role="radiogroup" aria-label="مدة الاشتراك">
+        <button type="button" role="radio" aria-checked="true" data-period="monthly" data-i18n="pricing.monthly">شهري</button>
+        <button type="button" role="radio" aria-checked="false" data-period="yearly"><span data-i18n="pricing.yearly">سنوي</span> <small data-i18n="pricing.save"></small></button>
+      </div>
+      <div class="plans" id="plans"></div>
+      <p class="draft" id="priceDraft" data-i18n="pricing.draft" hidden></p>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="wrap narrow">
+      <div class="sec-head"><h2 data-i18n="faq.title">أسئلة نسمعها كثير</h2></div>
+      <details><summary data-i18n="faq.q1"></summary><p data-i18n="faq.a1"></p></details>
+      <details><summary data-i18n="faq.q2"></summary><p data-i18n="faq.a2"></p></details>
+      <details><summary data-i18n="faq.q3"></summary><p data-i18n="faq.a3"></p></details>
+      <details><summary data-i18n="faq.q4"></summary><p data-i18n="faq.a4"></p></details>
+      <details><summary data-i18n="faq.q5"></summary><p data-i18n="faq.a5"></p></details>
+      <details><summary data-i18n="faq.q6"></summary><p data-i18n="faq.a6"></p></details>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-copy">
+        <h2 data-i18n="contact.title">خلّنا نوريك ترميز على مطعمك</h2>
+        <p data-i18n="contact.sub"></p>
+        <div class="contact-links">
+          <a class="btn btn-wa" id="waBtn" href="#" target="_blank" rel="noopener" hidden><svg><use href="#i-wa"/></svg><span data-i18n="contact.whatsapp">راسلنا على واتساب</span></a>
+          <a class="btn btn-line" id="mailBtn" href="#" hidden><svg><use href="#i-mail"/></svg><span data-i18n="contact.email">راسلنا بالإيميل</span></a>
+        </div>
+        <p class="setup" id="contactSetup" data-i18n="contact.setup" hidden></p>
+      </div>
+      <form class="form" id="leadForm" novalidate>
+        <label><span data-i18n="contact.name">الاسم</span><input name="name" autocomplete="name" required></label>
+        <label><span data-i18n="contact.restaurant">اسم المطعم</span><input name="restaurant" autocomplete="organization"></label>
+        <div class="row2">
+          <label><span data-i18n="contact.city">المدينة</span><input name="city" autocomplete="address-level2"></label>
+          <label><span data-i18n="contact.phone">رقم الجوال</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" required></label>
+        </div>
+        <label><span data-i18n="contact.plan">الخطة</span><select name="plan" id="planSelect"></select></label>
+        <label><span data-i18n="contact.msg">ملاحظات (اختياري)</span><textarea name="message" rows="3"></textarea></label>
+        <button class="btn btn-solid" type="submit" id="sendBtn" data-i18n="contact.send">أرسل الطلب</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a class="brand" href="#top"><img src="assets/logo.svg" alt="" width="30" height="30"><span>ترميز</span></a>
+    <p>© <span id="year">2026</span> <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
+    <a href="#top" data-i18n="footer.top">للأعلى</a>
+  </div>
+</footer>
+
+<dialog class="reel-dialog" id="reelDialog">
+  <video id="reelVideo" controls playsinline></video>
+  <button type="button" class="close" id="reelClose" aria-label="إغلاق">×</button>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
+<script src="js/config.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
